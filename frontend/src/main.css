@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+@tailwindcss /preflight;
+@tailwindcss /utilities;
+
+@layer components {
+  .Container {
+    @apply mx-auto max-w-[1450px] px-6;
+  }
+}
