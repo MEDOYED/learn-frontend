@@ -31,13 +31,13 @@
 
 ```javascript
 // Приклади примітивних типів
-let name = "Максим";           // string
-let age = 25;                  // number
-let isStudent = true;          // boolean
-let job;                       // undefined
-let car = null;                // null
-let id = Symbol('id');         // symbol
-let bigNumber = 123n;          // bigint
+let name = "Максим"; // string
+let age = 25; // number
+let isStudent = true; // boolean
+let job; // undefined
+let car = null; // null
+let id = Symbol("id"); // symbol
+let bigNumber = 123n; // bigint
 ```
 
 ---
@@ -45,26 +45,29 @@ let bigNumber = 123n;          // bigint
 #### <span style="color: #4a90e2">**Чим відрізняється `null` від `undefined`?**</span>
 
 **`undefined`** - змінна оголошена, але не ініціалізована:
+
 ```javascript
 let x;
 console.log(x); // undefined - змінна існує, але значення не присвоєно
 ```
 
 **`null`** - навмисно присвоєне "порожнє" значення:
+
 ```javascript
 let user = null; // null - явно вказали, що значення відсутнє
 ```
 
 **Основні відмінності:**
+
 - `undefined` - "система не знає значення"
 - `null` - "програміст явно вказав відсутність значення"
 
 ```javascript
 // Перевірка
 console.log(typeof undefined); // "undefined"
-console.log(typeof null);      // "object" (це баг JS!)
+console.log(typeof null); // "object" (це баг JS!)
 
-console.log(undefined == null);  // true (приведення типів)
+console.log(undefined == null); // true (приведення типів)
 console.log(undefined === null); // false (строга перевірка)
 ```
 
@@ -81,21 +84,21 @@ let isActive = true;
 let data;
 let info = null;
 
-console.log(typeof name);      // "string"
-console.log(typeof age);       // "number"
-console.log(typeof isActive);  // "boolean"
-console.log(typeof data);      // "undefined"
-console.log(typeof info);      // "object" (особливість null)
+console.log(typeof name); // "string"
+console.log(typeof age); // "number"
+console.log(typeof isActive); // "boolean"
+console.log(typeof data); // "undefined"
+console.log(typeof info); // "object" (особливість null)
 
 // Для масивів і об'єктів
-console.log(typeof [1, 2, 3]);     // "object"
-console.log(typeof {a: 1});        // "object"
-console.log(typeof function() {}); // "function"
+console.log(typeof [1, 2, 3]); // "object"
+console.log(typeof { a: 1 }); // "object"
+console.log(typeof function () {}); // "function"
 ```
 
 ---
 
-#### <span style="color: #4a90e2">**⭐ Що поверне `typeof null`? Чому?**</span> *(дуже популярне питання)*
+#### <span style="color: #4a90e2">**⭐ Що поверне `typeof null`? Чому?**</span> _(дуже популярне питання)_
 
 **`typeof null`** повертає **`"object"`** - це **відома помилка** в JavaScript!
 
@@ -104,11 +107,13 @@ console.log(typeof null); // "object" ❌ (неправильно!)
 ```
 
 **Чому так сталось:**
+
 - Це історична помилка з першої версії JavaScript (1995 рік)
 - В оригінальній реалізації `null` мав той же тег типу, що й об'єкти
 - Помилку не можна виправити, бо це зламає мільйони сайтів
 
 **Як правильно перевірити `null`:**
+
 ```javascript
 // ❌ Неправильно
 if (typeof value === "object") {
@@ -131,25 +136,27 @@ if (typeof value === "object" && value !== null) {
 ### 🎯 **Завдання для закріплення:**
 
 1. **Визначи тип:** Що поверне `typeof` для кожного значення?
+
    ```javascript
-   typeof "42"
-   typeof 42
-   typeof true
-   typeof undefined
-   typeof null
-   typeof {}
-   typeof []
-   typeof function() {}
+   typeof "42";
+   typeof 42;
+   typeof true;
+   typeof undefined;
+   typeof null;
+   typeof {};
+   typeof [];
+   typeof function () {};
    ```
 
 2. **Практика:** Напиши функцію `checkType(value)`, яка правильно визначає тип, включаючи `null`:
+
    ```javascript
    function checkType(value) {
      // твоє рішення
    }
-   
-   checkType(null);      // повинно повертати "null"
-   checkType("hello");   // повинно повертати "string"
+
+   checkType(null); // повинно повертати "null"
+   checkType("hello"); // повинно повертати "string"
    ```
 
 3. **Логіка:** Поясни, чому `null == undefined` дає `true`, а `null === undefined` дає `false`?
@@ -158,24 +165,24 @@ if (typeof value === "object" && value !== null) {
 
 ### 📊 Змінні - ТОП питання
 
-#### <span style="color: #4a90e2">**⭐ Чим відрізняється `var`, `let`, `const`?**</span> *(задають завжди)*
+#### <span style="color: #4a90e2">**⭐ Чим відрізняється `var`, `let`, `const`?**</span> _(задають завжди)_
 
-| Характеристика | `var` | `let` | `const` |
-|---|---|---|---|
-| **Scope (область видимості)** | Function scope | Block scope | Block scope |
-| **Hoisting** | Так (undefined) | Так (TDZ) | Так (TDZ) |
-| **Переоголошення** | Можна | Не можна | Не можна |
-| **Переприсвоєння** | Можна | Можна | Не можна |
+| Характеристика                | `var`           | `let`       | `const`     |
+| ----------------------------- | --------------- | ----------- | ----------- |
+| **Scope (область видимості)** | Function scope  | Block scope | Block scope |
+| **Hoisting**                  | Так (undefined) | Так (TDZ)   | Так (TDZ)   |
+| **Переоголошення**            | Можна           | Не можна    | Не можна    |
+| **Переприсвоєння**            | Можна           | Можна       | Не можна    |
 
 ```javascript
 // 1. SCOPE - Область видимості
 function example() {
   if (true) {
-    var a = 1;    // function scope
-    let b = 2;    // block scope
-    const c = 3;  // block scope
+    var a = 1; // function scope
+    let b = 2; // block scope
+    const c = 3; // block scope
   }
-  
+
   console.log(a); // 1 ✅ (доступна)
   console.log(b); // ReferenceError ❌
   console.log(c); // ReferenceError ❌
@@ -206,17 +213,19 @@ PI = 3.15; // ❌ TypeError
 ```
 
 **Коли що використовувати:**
+
 - **`const`** - за замовчуванням (якщо не потрібно змінювати)
 - **`let`** - якщо потрібно переприсвоювати
 - **`var`** - не використовуй (застаріло)
 
 ---
 
-#### <span style="color: #4a90e2">**⭐ Що таке hoisting?**</span> *(класичне питання)*
+#### <span style="color: #4a90e2">**⭐ Що таке hoisting?**</span> _(класичне питання)_
 
 **Hoisting** - це "підняття" оголошень змінних і функцій на верх області видимості під час компіляції.
 
 **Як працює з `var`:**
+
 ```javascript
 // Що ми пишемо:
 console.log(x); // undefined
@@ -229,6 +238,7 @@ x = 5; // присвоєння залишилось на місці
 ```
 
 **Як працює з `let`/`const` (Temporal Dead Zone):**
+
 ```javascript
 // Що ми пишемо:
 console.log(y); // ReferenceError ❌
@@ -241,6 +251,7 @@ let y = 10;
 ```
 
 **Function hoisting:**
+
 ```javascript
 // Function Declaration - повністю піднімається
 sayHello(); // "Привіт!" ✅ Працює
@@ -252,7 +263,7 @@ function sayHello() {
 // Function Expression - тільки змінна піднімається
 sayBye(); // TypeError ❌ (undefined is not a function)
 
-var sayBye = function() {
+var sayBye = function () {
   console.log("Бувай!");
 };
 ```
@@ -266,7 +277,7 @@ var sayBye = function() {
 ```javascript
 const user = {
   name: "Іван",
-  age: 25
+  age: 25,
 };
 
 // ✅ Можна змінювати властивості
@@ -291,10 +302,11 @@ console.log(numbers); // [10, 2, 3, 4]
 ```
 
 **Як зробити об'єкт повністю незмінним:**
+
 ```javascript
 const user = Object.freeze({
   name: "Іван",
-  age: 25
+  age: 25,
 });
 
 user.name = "Петро"; // ❌ Не працює (в strict mode - Error)
@@ -305,27 +317,28 @@ console.log(user.name); // "Іван"
 
 ### 🔄 Приведення типів - ТОП питання
 
-#### <span style="color: #4a90e2">**⭐ Різниця між `==` та `===`?**</span> *(100% запитають)*
+#### <span style="color: #4a90e2">**⭐ Різниця між `==` та `===`?**</span> _(100% запитають)_
 
 **`==` (Abstract Equality)** - порівняння з приведенням типів
 **`===` (Strict Equality)** - порівняння без приведення типів
 
 ```javascript
 // Приклади з ==
-console.log(5 == "5");    // true ✅ (число приводиться до рядка)
-console.log(true == 1);   // true ✅ (boolean приводиться до числа)
+console.log(5 == "5"); // true ✅ (число приводиться до рядка)
+console.log(true == 1); // true ✅ (boolean приводиться до числа)
 console.log(null == undefined); // true ✅ (спеціальне правило)
-console.log(0 == false);  // true ✅ (boolean → number)
+console.log(0 == false); // true ✅ (boolean → number)
 console.log("" == false); // true ✅ (порожній рядок → false)
 
 // Приклади з ===
-console.log(5 === "5");   // false ❌ (різні типи)
-console.log(true === 1);  // false ❌ (різні типи)
+console.log(5 === "5"); // false ❌ (різні типи)
+console.log(true === 1); // false ❌ (різні типи)
 console.log(null === undefined); // false ❌ (різні типи)
 console.log(0 === false); // false ❌ (різні типи)
 ```
 
 **Правила приведення для `==`:**
+
 1. Якщо типи однакові → порівнюється як `===`
 2. `null == undefined` → `true`
 3. Number + String → String приводиться до Number
@@ -333,6 +346,7 @@ console.log(0 === false); // false ❌ (різні типи)
 5. Object → викликається `valueOf()` або `toString()`
 
 **Коли що використовувати:**
+
 - **`===`** - завжди (рекомендовано)
 - **`==`** - тільки для `null/undefined` перевірки
 
@@ -355,6 +369,7 @@ if (value === null || value === undefined) {
 **Falsy values** - значення, які приводяться до `false` в Boolean контексті.
 
 **Всього 8 falsy значень:**
+
 1. **`false`** - логічне false
 2. **`0`** - нуль
 3. **`-0`** - мінус нуль
@@ -366,42 +381,43 @@ if (value === null || value === undefined) {
 
 ```javascript
 // Перевірка falsy значень
-console.log(Boolean(false));     // false
-console.log(Boolean(0));         // false
-console.log(Boolean(-0));        // false
-console.log(Boolean(0n));        // false
-console.log(Boolean(""));        // false
-console.log(Boolean(null));      // false
+console.log(Boolean(false)); // false
+console.log(Boolean(0)); // false
+console.log(Boolean(-0)); // false
+console.log(Boolean(0n)); // false
+console.log(Boolean("")); // false
+console.log(Boolean(null)); // false
 console.log(Boolean(undefined)); // false
-console.log(Boolean(NaN));       // false
+console.log(Boolean(NaN)); // false
 
 // Все інше - truthy
-console.log(Boolean("0"));       // true (рядок з нулем)
-console.log(Boolean("false"));   // true (рядок)
-console.log(Boolean([]));        // true (порожній масив)
-console.log(Boolean({}));        // true (порожній об'єкт)
-console.log(Boolean(42));        // true (число != 0)
+console.log(Boolean("0")); // true (рядок з нулем)
+console.log(Boolean("false")); // true (рядок)
+console.log(Boolean([])); // true (порожній масив)
+console.log(Boolean({})); // true (порожній об'єкт)
+console.log(Boolean(42)); // true (число != 0)
 ```
 
 **Практичне використання:**
+
 ```javascript
 function checkUser(user) {
   if (!user) {
     return "Користувач не знайдений"; // спрацює для null, undefined, ""
   }
-  
+
   if (!user.name) {
     return "Ім'я обов'язкове"; // спрацює для "", null, undefined
   }
-  
+
   return `Привіт, ${user.name}!`;
 }
 
 // Тестування
-checkUser(null);           // "Користувач не знайдений"
-checkUser({});             // "Ім'я обов'язкове"
-checkUser({name: ""});     // "Ім'я обов'язкове"
-checkUser({name: "Іван"}); // "Привіт, Іван!"
+checkUser(null); // "Користувач не знайдений"
+checkUser({}); // "Ім'я обов'язкове"
+checkUser({ name: "" }); // "Ім'я обов'язкове"
+checkUser({ name: "Іван" }); // "Привіт, Іван!"
 ```
 
 ---
@@ -409,42 +425,45 @@ checkUser({name: "Іван"}); // "Привіт, Іван!"
 ### 🎯 **Завдання для закріплення:**
 
 1. **Hoisting:** Що виведе цей код і чому?
+
    ```javascript
    console.log(a);
    console.log(b);
    console.log(c);
-   
+
    var a = 1;
    let b = 2;
    const c = 3;
    ```
 
 2. **Порівняння:** Поясни результати:
+
    ```javascript
-   console.log([] == false);    // ?
-   console.log([] === false);   // ?
-   console.log("0" == false);   // ?
-   console.log("0" === false);  // ?
+   console.log([] == false); // ?
+   console.log([] === false); // ?
+   console.log("0" == false); // ?
+   console.log("0" === false); // ?
    ```
 
 3. **Const об'єкти:** Як зробити цей код валідним?
+
    ```javascript
    const config = {
      api: "https://api.com",
-     timeout: 5000
+     timeout: 5000,
    };
-   
+
    // Потрібно змінити timeout на 3000
    // config = {...config, timeout: 3000}; // Error!
    ```
 
 4. **Falsy перевірка:** Напиши функцію `isEmpty(value)`, яка перевіряє чи значення "порожнє":
    ```javascript
-   isEmpty("");        // true
-   isEmpty(0);         // true
-   isEmpty(null);      // true
-   isEmpty("hello");   // false
-   isEmpty([]);        // ? (як ти вирішиш?)
+   isEmpty(""); // true
+   isEmpty(0); // true
+   isEmpty(null); // true
+   isEmpty("hello"); // false
+   isEmpty([]); // ? (як ти вирішиш?)
    ```
 
 ---
@@ -456,6 +475,7 @@ checkUser({name: "Іван"}); // "Привіт, Іван!"
 #### <span style="color: #4a90e2">**⭐ Чим відрізняються function declaration від function expression?**</span>
 
 **Function Declaration** - оголошення функції з ключовим словом `function`:
+
 ```javascript
 // Function Declaration
 function sayHello() {
@@ -464,21 +484,22 @@ function sayHello() {
 ```
 
 **Function Expression** - функція як значення змінної:
+
 ```javascript
 // Function Expression
-const sayHello = function() {
+const sayHello = function () {
   console.log("Привіт!");
 };
 ```
 
 **Основні відмінності:**
 
-| Характеристика | Function Declaration | Function Expression |
-|---|---|---|
-| **Hoisting** | Повністю піднімається | Тільки змінна піднімається |
-| **Виклик до оголошення** | ✅ Можна | ❌ Не можна |
-| **Ім'я функції** | Обов'язкове | Опціональне |
-| **Область видимості** | Function/Global scope | Де оголошена змінна |
+| Характеристика           | Function Declaration  | Function Expression        |
+| ------------------------ | --------------------- | -------------------------- |
+| **Hoisting**             | Повністю піднімається | Тільки змінна піднімається |
+| **Виклик до оголошення** | ✅ Можна              | ❌ Не можна                |
+| **Ім'я функції**         | Обов'язкове           | Опціональне                |
+| **Область видимості**    | Function/Global scope | Де оголошена змінна        |
 
 ```javascript
 // HOISTING - Function Declaration
@@ -491,7 +512,7 @@ function sayHello() {
 // HOISTING - Function Expression
 sayBye(); // ❌ TypeError: sayBye is not a function
 
-var sayBye = function() {
+var sayBye = function () {
   console.log("Бувай!");
 };
 
@@ -502,6 +523,7 @@ var sayBye = function() {
 ```
 
 **Коли що використовувати:**
+
 - **Function Declaration** - для основних функцій, які потрібні в усій області видимості
 - **Function Expression** - для умовних функцій, колбеків, методів об'єктів
 
@@ -511,10 +533,10 @@ let condition = true;
 
 if (condition) {
   // Function Expression - краще
-  const helper = function() {
+  const helper = function () {
     return "допомога";
   };
-  
+
   // Function Declaration - може працювати непередбачувано
   function badHelper() {
     return "погана допомога";
@@ -530,7 +552,7 @@ if (condition) {
 
 ```javascript
 // Звичайна функція
-const add = function(a, b) {
+const add = function (a, b) {
   return a + b;
 };
 
@@ -543,7 +565,7 @@ const add = (a, b) => {
 const add = (a, b) => a + b;
 
 // Один параметр - дужки необов'язкові
-const double = x => x * 2;
+const double = (x) => x * 2;
 
 // Без параметрів - дужки обов'язкові
 const getRandomNumber = () => Math.random();
@@ -551,48 +573,50 @@ const getRandomNumber = () => Math.random();
 
 **Основні відмінності:**
 
-| Характеристика | Regular Function | Arrow Function |
-|---|---|---|
-| **`this` контекст** | Динамічний | Лексичний (успадкований) |
-| **`arguments` об'єкт** | ✅ Є | ❌ Немає |
-| **Hoisting** | Function Declaration так | ❌ Ні |
-| **Конструктор `new`** | ✅ Можна | ❌ Не можна |
-| **`prototype`** | ✅ Є | ❌ Немає |
+| Характеристика         | Regular Function         | Arrow Function           |
+| ---------------------- | ------------------------ | ------------------------ |
+| **`this` контекст**    | Динамічний               | Лексичний (успадкований) |
+| **`arguments` об'єкт** | ✅ Є                     | ❌ Немає                 |
+| **Hoisting**           | Function Declaration так | ❌ Ні                    |
+| **Конструктор `new`**  | ✅ Можна                 | ❌ Не можна              |
+| **`prototype`**        | ✅ Є                     | ❌ Немає                 |
 
 ```javascript
 // THIS - головна відмінність!
 const user = {
   name: "Іван",
-  
+
   // Regular function - свій this
-  sayHello: function() {
+  sayHello: function () {
     console.log(`Привіт, ${this.name}!`); // "Привіт, Іван!"
   },
-  
+
   // Arrow function - this з батьківського контексту
   sayBye: () => {
     console.log(`Бувай, ${this.name}!`); // "Бувай, undefined!"
   },
-  
+
   // Практичний приклад з колбеками
-  delayedGreeting: function() {
-    setTimeout(function() {
+  delayedGreeting: function () {
+    setTimeout(function () {
       console.log(`Привіт, ${this.name}!`); // "Привіт, undefined!" (this = window)
     }, 1000);
-    
+
     setTimeout(() => {
       console.log(`Привіт, ${this.name}!`); // "Привіт, Іван!" ✅
     }, 1000);
-  }
+  },
 };
 ```
 
 **Коли використовувати Arrow Functions:**
+
 - ✅ Колбеки, map, filter, forEach
 - ✅ Коли потрібен батьківський `this`
 - ✅ Короткі функції-утиліти
 
 **Коли НЕ використовувати:**
+
 - ❌ Методи об'єктів (втрачається `this`)
 - ❌ Конструктори
 - ❌ Коли потрібен `arguments`
@@ -601,13 +625,14 @@ const user = {
 
 ### 🎯 Контекст this - ТОП питання
 
-#### <span style="color: #4a90e2">**⭐ Що таке `this` і як визначається його значення?**</span> *(дуже важливо)*
+#### <span style="color: #4a90e2">**⭐ Що таке `this` і як визначається його значення?**</span> _(дуже важливо)_
 
 **`this`** - це посилання на об'єкт, в контексті якого викликається функція.
 
 **Правила визначення `this` (в порядку пріоритету):**
 
 **1. Явне прив'язування (`call`, `apply`, `bind`):**
+
 ```javascript
 const user = { name: "Іван" };
 
@@ -615,18 +640,19 @@ function greet() {
   console.log(`Привіт, ${this.name}!`);
 }
 
-greet.call(user);    // "Привіт, Іван!"
-greet.apply(user);   // "Привіт, Іван!"
-greet.bind(user)();  // "Привіт, Іван!"
+greet.call(user); // "Привіт, Іван!"
+greet.apply(user); // "Привіт, Іван!"
+greet.bind(user)(); // "Привіт, Іван!"
 ```
 
 **2. Неявне прив'язування (виклик через об'єкт):**
+
 ```javascript
 const user = {
   name: "Петро",
   greet() {
     console.log(`Привіт, ${this.name}!`); // this = user
-  }
+  },
 };
 
 user.greet(); // "Привіт, Петро!"
@@ -637,6 +663,7 @@ greetFunc(); // "Привіт, undefined!" (this = window/undefined)
 ```
 
 **3. `new` - створення об'єкта:**
+
 ```javascript
 function Person(name) {
   this.name = name; // this = новий об'єкт
@@ -646,6 +673,7 @@ const person = new Person("Марія"); // this буде новим об'єкт
 ```
 
 **4. За замовчуванням:**
+
 ```javascript
 function greet() {
   console.log(this); // window (в браузері) або undefined (strict mode)
@@ -655,30 +683,31 @@ greet(); // window або undefined
 ```
 
 **Практичні приклади проблем з `this`:**
+
 ```javascript
 const button = {
   text: "Натисни мене",
-  
-  handleClick: function() {
+
+  handleClick: function () {
     console.log(`Клік: ${this.text}`);
-  }
+  },
 };
 
 // Проблема - втрата контексту
-document.addEventListener('click', button.handleClick); 
+document.addEventListener("click", button.handleClick);
 // "Клік: undefined" ❌
 
 // Рішення 1: bind
-document.addEventListener('click', button.handleClick.bind(button));
+document.addEventListener("click", button.handleClick.bind(button));
 // "Клік: Натисни мене" ✅
 
 // Рішення 2: arrow function
 const button2 = {
   text: "Натисни мене",
-  
+
   handleClick: () => {
     console.log(`Клік: ${this.text}`); // this з батьківського scope
-  }
+  },
 };
 ```
 
@@ -697,26 +726,26 @@ const globalArrow = () => {
 // В об'єкті
 const user = {
   name: "Олена",
-  
-  regularMethod: function() {
+
+  regularMethod: function () {
     console.log(`Regular: ${this.name}`); // "Regular: Олена"
-    
+
     const innerArrow = () => {
       console.log(`Arrow: ${this.name}`); // "Arrow: Олена" (успадкований this)
     };
-    
+
     function innerRegular() {
       console.log(`Inner: ${this.name}`); // "Inner: undefined" (власний this)
     }
-    
-    innerArrow();  // Працює!
+
+    innerArrow(); // Працює!
     innerRegular(); // Не працює!
   },
-  
+
   arrowMethod: () => {
     console.log(`Arrow method: ${this.name}`); // "Arrow method: undefined"
     // this = глобальний об'єкт, не user!
-  }
+  },
 };
 
 user.regularMethod();
@@ -724,19 +753,20 @@ user.arrowMethod();
 ```
 
 **Практичний приклад - таймери:**
+
 ```javascript
 class Timer {
   constructor() {
     this.seconds = 0;
   }
-  
+
   start() {
     // Regular function - втрачає this
-    setInterval(function() {
+    setInterval(function () {
       this.seconds++; // TypeError: Cannot read property 'seconds' of undefined
       console.log(this.seconds);
     }, 1000);
-    
+
     // Arrow function - зберігає this ✅
     setInterval(() => {
       this.seconds++; // Працює!
@@ -751,11 +781,12 @@ timer.start();
 
 ---
 
-#### <span style="color: #4a90e2">**Що робить `bind`, `call`, `apply`?**</span> *(базове розуміння)*
+#### <span style="color: #4a90e2">**Що робить `bind`, `call`, `apply`?**</span> _(базове розуміння)_
 
 Ці методи дозволяють **явно встановити контекст `this`** для функції.
 
 **`call(thisArg, arg1, arg2, ...)`** - викликає функцію з заданим `this`:
+
 ```javascript
 function greet(greeting, punctuation) {
   console.log(`${greeting}, ${this.name}${punctuation}`);
@@ -767,6 +798,7 @@ greet.call(user, "Привіт", "!"); // "Привіт, Андрій!"
 ```
 
 **`apply(thisArg, [argsArray])`** - те саме, але аргументи як масив:
+
 ```javascript
 greet.apply(user, ["Доброго дня", "."]); // "Доброго дня, Андрій."
 
@@ -777,6 +809,7 @@ const max = Math.max.apply(null, numbers); // 5
 ```
 
 **`bind(thisArg, arg1, arg2, ...)`** - створює нову функцію з закріпленим `this`:
+
 ```javascript
 const boundGreet = greet.bind(user, "Вітаю");
 
@@ -785,28 +818,29 @@ boundGreet("!!!"); // "Вітаю, Андрій!!!"
 // Практичний приклад - обробники подій
 const button = {
   text: "Кнопка",
-  handleClick: function() {
+  handleClick: function () {
     console.log(`Натиснуто: ${this.text}`);
-  }
+  },
 };
 
 // Проблема
-document.addEventListener('click', button.handleClick); // this = document ❌
+document.addEventListener("click", button.handleClick); // this = document ❌
 
 // Рішення
-document.addEventListener('click', button.handleClick.bind(button)); // ✅
+document.addEventListener("click", button.handleClick.bind(button)); // ✅
 ```
 
 **Різниця між ними:**
+
 - **`call`** - викликає зараз, аргументи окремо
-- **`apply`** - викликає зараз, аргументи масивом  
+- **`apply`** - викликає зараз, аргументи масивом
 - **`bind`** - повертає нову функцію, не викликає
 
 ---
 
 ### 🔒 Замикання - ТОП питання
 
-#### <span style="color: #4a90e2">**⭐ Що таке closure?**</span> *(обов'язкове питання)*
+#### <span style="color: #4a90e2">**⭐ Що таке closure?**</span> _(обов'язкове питання)_
 
 **Closure (замикання)** - це функція, яка має доступ до змінних з зовнішньої (батьківської) області видимості навіть після того, як батьківська функція завершила виконання.
 
@@ -815,12 +849,12 @@ document.addEventListener('click', button.handleClick.bind(button)); // ✅
 function outerFunction(x) {
   // Зовнішня змінна
   const outerVariable = x;
-  
+
   // Внутрішня функція
   function innerFunction(y) {
     console.log(outerVariable + y); // Доступ до outerVariable
   }
-  
+
   return innerFunction; // Повертаємо функцію
 }
 
@@ -834,38 +868,40 @@ myClosure(5); // 15
 **Практичні приклади:**
 
 **1. Приватні змінні:**
+
 ```javascript
 function createCounter() {
   let count = 0; // Приватна змінна
-  
+
   return {
-    increment: function() {
+    increment: function () {
       count++;
       return count;
     },
-    decrement: function() {
+    decrement: function () {
       count--;
       return count;
     },
-    getCount: function() {
+    getCount: function () {
       return count;
-    }
+    },
   };
 }
 
 const counter = createCounter();
 console.log(counter.increment()); // 1
 console.log(counter.increment()); // 2
-console.log(counter.getCount());  // 2
+console.log(counter.getCount()); // 2
 
 // count недоступний ззовні - інкапсуляція!
 console.log(counter.count); // undefined
 ```
 
 **2. Функції-фабрики:**
+
 ```javascript
 function createMultiplier(multiplier) {
-  return function(x) {
+  return function (x) {
     return x * multiplier;
   };
 }
@@ -880,20 +916,21 @@ console.log(triple(5)); // 15
 ```
 
 **3. Модульний патерн:**
+
 ```javascript
-const myModule = (function() {
+const myModule = (function () {
   let privateVariable = 0;
-  
+
   function privateFunction() {
     console.log("Приватна функція");
   }
-  
+
   return {
-    publicMethod: function() {
+    publicMethod: function () {
       privateVariable++;
       privateFunction();
       return privateVariable;
-    }
+    },
   };
 })();
 
@@ -907,6 +944,7 @@ myModule.publicMethod(); // "Приватна функція", повертає 
 #### <span style="color: #4a90e2">**⭐ Класична задача з циклом і setTimeout - як розв'язати?**</span>
 
 **Проблема:**
+
 ```javascript
 for (var i = 0; i < 3; i++) {
   setTimeout(() => console.log(i), 100);
@@ -915,11 +953,13 @@ for (var i = 0; i < 3; i++) {
 ```
 
 **Чому так відбувається:**
+
 1. `var` має **function scope** - одна змінна `i` для всього циклу
 2. `setTimeout` виконується **асинхронно** - після завершення циклу
 3. Коли колбеки виконуються, `i` вже дорівнює `3`
 
 **Рішення 1: Використати `let` (найпростіше):**
+
 ```javascript
 for (let i = 0; i < 3; i++) {
   setTimeout(() => console.log(i), 100);
@@ -930,9 +970,10 @@ for (let i = 0; i < 3; i++) {
 ```
 
 **Рішення 2: Closure з IIFE (Immediately Invoked Function Expression):**
+
 ```javascript
 for (var i = 0; i < 3; i++) {
-  (function(index) {
+  (function (index) {
     setTimeout(() => console.log(index), 100);
   })(i);
 }
@@ -942,6 +983,7 @@ for (var i = 0; i < 3; i++) {
 ```
 
 **Рішення 3: `bind`:**
+
 ```javascript
 for (var i = 0; i < 3; i++) {
   setTimeout(console.log.bind(null, i), 100);
@@ -952,9 +994,10 @@ for (var i = 0; i < 3; i++) {
 ```
 
 **Рішення 4: Додаткова функція:**
+
 ```javascript
 function createLogger(value) {
-  return function() {
+  return function () {
     console.log(value);
   };
 }
@@ -966,6 +1009,7 @@ for (var i = 0; i < 3; i++) {
 ```
 
 **Детальне пояснення проблеми:**
+
 ```javascript
 // Що "бачить" JavaScript:
 var i; // hoisting
@@ -984,33 +1028,36 @@ for (i = 0; i < 3; i++) {
 ### 🎯 **Завдання для закріплення:**
 
 1. **Function types:** Що виведе цей код?
+
    ```javascript
    console.log(typeof regularFunc);
    console.log(typeof arrowFunc);
-   
+
    function regularFunc() {}
    const arrowFunc = () => {};
    ```
 
 2. **This context:** Виправи код, щоб виводилось правильне ім'я:
+
    ```javascript
    const user = {
      name: "Іван",
      greet: () => {
        console.log(`Привіт, ${this.name}!`);
-     }
+     },
    };
-   
+
    user.greet(); // Повинно вивести "Привіт, Іван!"
    ```
 
 3. **Closure практика:** Створи функцію `createBank()`, яка повертає об'єкт з методами:
+
    ```javascript
    const bank = createBank();
-   bank.deposit(100);    // Додати гроші
-   bank.withdraw(30);    // Зняти гроші
-   bank.getBalance();    // Показати баланс
-   
+   bank.deposit(100); // Додати гроші
+   bank.withdraw(30); // Зняти гроші
+   bank.getBalance(); // Показати баланс
+
    // Баланс повинен бути приватним!
    ```
 
@@ -1028,26 +1075,26 @@ for (i = 0; i < 3; i++) {
 
 ### 🔄 Основи - ТОП питання
 
-#### <span style="color: #4a90e2">**⭐ Що таке Event Loop?**</span> *(базове розуміння)*
+#### <span style="color: #4a90e2">**⭐ Що таке Event Loop?**</span> _(базове розуміння)_
 
 **Event Loop** - це механізм, який дозволяє JavaScript виконувати асинхронний код в однопоточному середовищі.
 
 **Як працює:**
 
 1. **Call Stack** - стек виконання синхронного коду
-2. **Web APIs** - асинхронні операції (setTimeout, HTTP запити, DOM події)  
+2. **Web APIs** - асинхронні операції (setTimeout, HTTP запити, DOM події)
 3. **Callback Queue** - черга колбеків, готових до виконання
 4. **Event Loop** - перевіряє чи порожній Call Stack і переносить колбеки з Queue
 
 ```javascript
 // Приклад роботи Event Loop
-console.log('1'); // Синхронно -> Call Stack
+console.log("1"); // Синхронно -> Call Stack
 
 setTimeout(() => {
-  console.log('2'); // Асинхронно -> Web API -> Callback Queue
+  console.log("2"); // Асинхронно -> Web API -> Callback Queue
 }, 0);
 
-console.log('3'); // Синхронно -> Call Stack
+console.log("3"); // Синхронно -> Call Stack
 
 // Результат: 1, 3, 2
 // Навіть з timeout 0, колбек виконається після синхронного коду!
@@ -1057,26 +1104,26 @@ console.log('3'); // Синхронно -> Call Stack
 
 ```javascript
 function first() {
-  console.log('First');
+  console.log("First");
 }
 
 function second() {
   setTimeout(() => {
-    console.log('Second');
+    console.log("Second");
   }, 0);
 }
 
 function third() {
-  console.log('Third');
+  console.log("Third");
 }
 
-first();    // 1. Додається в Call Stack, виконується -> "First"
-second();   // 2. Додається в Call Stack
-            //    setTimeout йде в Web API
-            //    Колбек буде в Callback Queue після 0ms
-third();    // 3. Додається в Call Stack, виконується -> "Third"
-            // 4. Call Stack порожній
-            // 5. Event Loop бере колбек з Queue -> "Second"
+first(); // 1. Додається в Call Stack, виконується -> "First"
+second(); // 2. Додається в Call Stack
+//    setTimeout йде в Web API
+//    Колбек буде в Callback Queue після 0ms
+third(); // 3. Додається в Call Stack, виконується -> "Third"
+// 4. Call Stack порожній
+// 5. Event Loop бере колбек з Queue -> "Second"
 
 // Результат: First, Third, Second
 ```
@@ -1084,21 +1131,22 @@ third();    // 3. Додається в Call Stack, виконується -> "T
 **Мікротаски vs Макротаски:**
 
 ```javascript
-console.log('1');
+console.log("1");
 
 // Макротаска (setTimeout)
-setTimeout(() => console.log('2'), 0);
+setTimeout(() => console.log("2"), 0);
 
 // Мікротаска (Promise)
-Promise.resolve().then(() => console.log('3'));
+Promise.resolve().then(() => console.log("3"));
 
-console.log('4');
+console.log("4");
 
 // Результат: 1, 4, 3, 2
 // Мікротаски мають вищий пріоритет!
 ```
 
 **Чому це важливо:**
+
 - Розуміння порядку виконання асинхронного коду
 - Уникнення блокування UI
 - Правильна робота з Promise, async/await
@@ -1117,10 +1165,10 @@ function greet(name, callback) {
 }
 
 function afterGreeting() {
-  console.log('Як справи?');
+  console.log("Як справи?");
 }
 
-greet('Іван', afterGreeting);
+greet("Іван", afterGreeting);
 // "Привіт, Іван!"
 // "Як справи?"
 ```
@@ -1130,12 +1178,12 @@ greet('Іван', afterGreeting);
 ```javascript
 // setTimeout callback
 setTimeout(() => {
-  console.log('Минуло 2 секунди');
+  console.log("Минуло 2 секунди");
 }, 2000);
 
 // Event callback
-button.addEventListener('click', (event) => {
-  console.log('Кнопку натиснуто');
+button.addEventListener("click", (event) => {
+  console.log("Кнопку натиснуто");
 });
 
 // Array методи з колбеками
@@ -1152,12 +1200,12 @@ const evens = numbers.filter((num) => num % 2 === 0);
 
 ```javascript
 // ❌ Callback Hell - важко читати і підтримувати
-getData(function(a) {
-  getMoreData(a, function(b) {
-    getEvenMoreData(b, function(c) {
-      getMoreDataAgain(c, function(d) {
-        getFinalData(d, function(e) {
-          console.log('Готово:', e);
+getData(function (a) {
+  getMoreData(a, function (b) {
+    getEvenMoreData(b, function (c) {
+      getMoreDataAgain(c, function (d) {
+        getFinalData(d, function (e) {
+          console.log("Готово:", e);
         });
       });
     });
@@ -1171,9 +1219,9 @@ try {
   const c = await getEvenMoreData(b);
   const d = await getMoreDataAgain(c);
   const e = await getFinalData(d);
-  console.log('Готово:', e);
+  console.log("Готово:", e);
 } catch (error) {
-  console.error('Помилка:', error);
+  console.error("Помилка:", error);
 }
 ```
 
@@ -1185,9 +1233,9 @@ function fetchUserData(userId, callback) {
   // Симуляція запиту
   setTimeout(() => {
     if (userId > 0) {
-      callback(null, { id: userId, name: 'Іван' }); // (error, data)
+      callback(null, { id: userId, name: "Іван" }); // (error, data)
     } else {
-      callback(new Error('Невірний ID користувача')); // (error)
+      callback(new Error("Невірний ID користувача")); // (error)
     }
   }, 1000);
 }
@@ -1195,10 +1243,10 @@ function fetchUserData(userId, callback) {
 // Використання
 fetchUserData(1, (error, user) => {
   if (error) {
-    console.error('Помилка:', error.message);
+    console.error("Помилка:", error.message);
     return;
   }
-  console.log('Користувач:', user);
+  console.log("Користувач:", user);
 });
 ```
 
@@ -1206,7 +1254,7 @@ fetchUserData(1, (error, user) => {
 
 ### 🎯 Promises - ТОП питання
 
-#### <span style="color: #4a90e2">**⭐ Що таке Promise?**</span> *(обов'язково)*
+#### <span style="color: #4a90e2">**⭐ Що таке Promise?**</span> _(обов'язково)_
 
 **Promise** - це об'єкт, який представляє результат асинхронної операції, яка може завершитися успішно або з помилкою в майбутньому.
 
@@ -1220,12 +1268,12 @@ fetchUserData(1, (error, user) => {
 // Створення Promise
 const myPromise = new Promise((resolve, reject) => {
   const success = true;
-  
+
   setTimeout(() => {
     if (success) {
-      resolve('Операція успішна!'); // Fulfilled
+      resolve("Операція успішна!"); // Fulfilled
     } else {
-      reject(new Error('Щось пішло не так!')); // Rejected
+      reject(new Error("Щось пішло не так!")); // Rejected
     }
   }, 2000);
 });
@@ -1233,25 +1281,26 @@ const myPromise = new Promise((resolve, reject) => {
 // Використання Promise
 myPromise
   .then((result) => {
-    console.log('Успіх:', result); // "Успіх: Операція успішна!"
+    console.log("Успіх:", result); // "Успіх: Операція успішна!"
   })
   .catch((error) => {
-    console.error('Помилка:', error.message);
+    console.error("Помилка:", error.message);
   });
 ```
 
 **Практичні приклади:**
 
 **1. HTTP запит:**
+
 ```javascript
 // Симуляція fetch запиту
 function fetchUser(id) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
       if (id === 1) {
-        resolve({ id: 1, name: 'Іван', email: 'ivan@example.com' });
+        resolve({ id: 1, name: "Іван", email: "ivan@example.com" });
       } else {
-        reject(new Error('Користувача не знайдено'));
+        reject(new Error("Користувача не знайдено"));
       }
     }, 1000);
   });
@@ -1259,35 +1308,37 @@ function fetchUser(id) {
 
 // Використання
 fetchUser(1)
-  .then(user => {
-    console.log('Знайдено користувача:', user.name);
+  .then((user) => {
+    console.log("Знайдено користувача:", user.name);
     return fetchUser(2); // Повертаємо новий Promise
   })
-  .then(user => {
-    console.log('Другий користувач:', user.name);
+  .then((user) => {
+    console.log("Другий користувач:", user.name);
   })
-  .catch(error => {
-    console.error('Помилка:', error.message); // "Користувача не знайдено"
+  .catch((error) => {
+    console.error("Помилка:", error.message); // "Користувача не знайдено"
   });
 ```
 
 **2. Promise статичні методи:**
+
 ```javascript
 // Promise.resolve() - одразу resolved Promise
-const resolvedPromise = Promise.resolve('Готово!');
-resolvedPromise.then(result => console.log(result)); // "Готово!"
+const resolvedPromise = Promise.resolve("Готово!");
+resolvedPromise.then((result) => console.log(result)); // "Готово!"
 
 // Promise.reject() - одразу rejected Promise
-const rejectedPromise = Promise.reject(new Error('Помилка!'));
-rejectedPromise.catch(error => console.log(error.message)); // "Помилка!"
+const rejectedPromise = Promise.reject(new Error("Помилка!"));
+rejectedPromise.catch((error) => console.log(error.message)); // "Помилка!"
 
 // Конвертація значення в Promise
 Promise.resolve(42)
-  .then(value => value * 2)
-  .then(result => console.log(result)); // 84
+  .then((value) => value * 2)
+  .then((result) => console.log(result)); // 84
 ```
 
 **Чому Promise кращі за колбеки:**
+
 - ✅ Уникають callback hell
 - ✅ Легша обробка помилок
 - ✅ Можна ланцюжити (chaining)
@@ -1303,7 +1354,7 @@ Promise.resolve(42)
 ```javascript
 const promise = new Promise((resolve, reject) => {
   const random = Math.random();
-  
+
   setTimeout(() => {
     if (random > 0.5) {
       resolve(`Успіх! Число: ${random}`);
@@ -1315,14 +1366,14 @@ const promise = new Promise((resolve, reject) => {
 
 promise
   .then((result) => {
-    console.log('✅', result); // Якщо resolve
+    console.log("✅", result); // Якщо resolve
     return result.toUpperCase(); // Повертаємо трансформоване значення
   })
   .then((uppercaseResult) => {
-    console.log('Трансформовано:', uppercaseResult);
+    console.log("Трансформовано:", uppercaseResult);
   })
   .catch((error) => {
-    console.error('❌', error.message); // Якщо reject
+    console.error("❌", error.message); // Якщо reject
   });
 ```
 
@@ -1331,19 +1382,19 @@ promise
 ```javascript
 // Кожен .then() повертає новий Promise
 fetchUser(1)
-  .then(user => {
-    console.log('1. Отримано користувача:', user.name);
+  .then((user) => {
+    console.log("1. Отримано користувача:", user.name);
     return fetchUserPosts(user.id); // Повертаємо Promise
   })
-  .then(posts => {
-    console.log('2. Отримано пости:', posts.length);
+  .then((posts) => {
+    console.log("2. Отримано пости:", posts.length);
     return posts[0]; // Повертаємо значення
   })
-  .then(firstPost => {
-    console.log('3. Перший пост:', firstPost.title);
+  .then((firstPost) => {
+    console.log("3. Перший пост:", firstPost.title);
   })
-  .catch(error => {
-    console.error('Помилка в будь-якому місці:', error);
+  .catch((error) => {
+    console.error("Помилка в будь-якому місці:", error);
   });
 ```
 
@@ -1351,54 +1402,54 @@ fetchUser(1)
 
 ```javascript
 // 1. .then() завжди повертає Promise
-const result = promise.then(() => 'Hello');
+const result = promise.then(() => "Hello");
 console.log(result instanceof Promise); // true
 
 // 2. Якщо в .then() кинути помилку, Promise стане rejected
 promise
   .then(() => {
-    throw new Error('Щось пішло не так');
+    throw new Error("Щось пішло не так");
   })
-  .catch(error => {
-    console.log('Спіймали помилку:', error.message);
+  .catch((error) => {
+    console.log("Спіймали помилку:", error.message);
   });
 
 // 3. .catch() також повертає Promise
 promise
-  .catch(error => {
-    console.log('Обробили помилку');
-    return 'Значення за замовчуванням'; // Promise стане resolved
+  .catch((error) => {
+    console.log("Обробили помилку");
+    return "Значення за замовчуванням"; // Promise стане resolved
   })
-  .then(result => {
-    console.log('Продовжуємо:', result);
+  .then((result) => {
+    console.log("Продовжуємо:", result);
   });
 
 // 4. finally() - виконується завжди
 promise
-  .then(result => console.log('Успіх:', result))
-  .catch(error => console.log('Помилка:', error))
-  .finally(() => console.log('Завершено')); // Завжди виконається
+  .then((result) => console.log("Успіх:", result))
+  .catch((error) => console.log("Помилка:", error))
+  .finally(() => console.log("Завершено")); // Завжди виконається
 ```
 
 ---
 
-#### <span style="color: #4a90e2">**⭐ Що таке `Promise.all`?**</span> *(популярне питання)*
+#### <span style="color: #4a90e2">**⭐ Що таке `Promise.all`?**</span> _(популярне питання)_
 
 **`Promise.all`** - чекає виконання **всіх** Promise і повертає масив результатів. Якщо хоча б один Promise rejected, весь `Promise.all` rejected.
 
 ```javascript
 // Базовий приклад
 const promise1 = Promise.resolve(3);
-const promise2 = new Promise(resolve => setTimeout(() => resolve('foo'), 1000));
+const promise2 = new Promise((resolve) => setTimeout(() => resolve("foo"), 1000));
 const promise3 = Promise.resolve(42);
 
 Promise.all([promise1, promise2, promise3])
-  .then(results => {
+  .then((results) => {
     console.log(results); // [3, 'foo', 42]
     // Результати в тому ж порядку, що й Promise
   })
-  .catch(error => {
-    console.error('Один з Promise failed:', error);
+  .catch((error) => {
+    console.error("Один з Promise failed:", error);
   });
 ```
 
@@ -1410,50 +1461,48 @@ async function loadUserData(userId) {
   try {
     // Всі запити йдуть паралельно!
     const [user, posts, comments] = await Promise.all([
-      fetchUser(userId),        // 1s
-      fetchUserPosts(userId),   // 2s  
-      fetchUserComments(userId) // 1.5s
+      fetchUser(userId), // 1s
+      fetchUserPosts(userId), // 2s
+      fetchUserComments(userId), // 1.5s
     ]);
-    
+
     // Всі дані готові через ~2s (найдовший запит)
     // Без Promise.all було б 1 + 2 + 1.5 = 4.5s
-    
+
     return {
       user,
       posts,
-      comments
+      comments,
     };
   } catch (error) {
-    console.error('Помилка завантаження:', error);
+    console.error("Помилка завантаження:", error);
     throw error;
   }
 }
 
 // Використання
 loadUserData(1)
-  .then(data => {
-    console.log('Всі дані:', data);
+  .then((data) => {
+    console.log("Всі дані:", data);
   })
-  .catch(error => {
-    console.error('Не вдалося завантажити дані');
+  .catch((error) => {
+    console.error("Не вдалося завантажити дані");
   });
 ```
 
 **Поведінка при помилках:**
 
 ```javascript
-const fastPromise = Promise.resolve('Швидко');
-const slowPromise = new Promise(resolve => 
-  setTimeout(() => resolve('Повільно'), 2000)
-);
-const failedPromise = Promise.reject(new Error('Помилка'));
+const fastPromise = Promise.resolve("Швидко");
+const slowPromise = new Promise((resolve) => setTimeout(() => resolve("Повільно"), 2000));
+const failedPromise = Promise.reject(new Error("Помилка"));
 
 Promise.all([fastPromise, slowPromise, failedPromise])
-  .then(results => {
-    console.log('Всі успішні:', results); // Не виконається
+  .then((results) => {
+    console.log("Всі успішні:", results); // Не виконається
   })
-  .catch(error => {
-    console.error('Помилка:', error.message); // "Помилка"
+  .catch((error) => {
+    console.error("Помилка:", error.message); // "Помилка"
     // Promise.all одразу rejected, навіть якщо slowPromise ще виконується
   });
 ```
@@ -1463,11 +1512,10 @@ Promise.all([fastPromise, slowPromise, failedPromise])
 ```javascript
 // Promise.allSettled() - чекає всіх, не важливо успіх чи помилка
 Promise.allSettled([
-  Promise.resolve('Успіх'),
-  Promise.reject('Помилка'),
-  Promise.resolve('Інший успіх')
-])
-.then(results => {
+  Promise.resolve("Успіх"),
+  Promise.reject("Помилка"),
+  Promise.resolve("Інший успіх"),
+]).then((results) => {
   console.log(results);
   // [
   //   { status: 'fulfilled', value: 'Успіх' },
@@ -1478,10 +1526,9 @@ Promise.allSettled([
 
 // Promise.race() - повертає результат першого завершеного Promise
 Promise.race([
-  new Promise(resolve => setTimeout(() => resolve('Швидкий'), 1000)),
-  new Promise(resolve => setTimeout(() => resolve('Повільний'), 2000))
-])
-.then(result => {
+  new Promise((resolve) => setTimeout(() => resolve("Швидкий"), 1000)),
+  new Promise((resolve) => setTimeout(() => resolve("Повільний"), 2000)),
+]).then((result) => {
   console.log(result); // 'Швидкий'
 });
 ```
@@ -1490,7 +1537,7 @@ Promise.race([
 
 ### 🚀 Async/Await - ТОП питання
 
-#### <span style="color: #4a90e2">**⭐ Що таке `async/await`?**</span> *(сучасний стандарт)*
+#### <span style="color: #4a90e2">**⭐ Що таке `async/await`?**</span> _(сучасний стандарт)_
 
 **`async/await`** - це синтаксичний цукор над Promise, який робить асинхронний код схожим на синхронний.
 
@@ -1500,14 +1547,14 @@ Promise.race([
 // ❌ З Promise
 function getUserData() {
   return fetchUser(1)
-    .then(user => {
+    .then((user) => {
       return fetchUserPosts(user.id);
     })
-    .then(posts => {
+    .then((posts) => {
       return { user, posts };
     })
-    .catch(error => {
-      console.error('Помилка:', error);
+    .catch((error) => {
+      console.error("Помилка:", error);
       throw error;
     });
 }
@@ -1519,7 +1566,7 @@ async function getUserData() {
     const posts = await fetchUserPosts(user.id);
     return { user, posts };
   } catch (error) {
-    console.error('Помилка:', error);
+    console.error("Помилка:", error);
     throw error;
   }
 }
@@ -1537,11 +1584,11 @@ async function example() {
   return 42; // Автоматично Promise.resolve(42)
 }
 
-example().then(result => console.log(result)); // 42
+example().then((result) => console.log(result)); // 42
 
 // 2. await "розгортає" Promise
 async function demo() {
-  const promise = Promise.resolve('Hello');
+  const promise = Promise.resolve("Hello");
   const result = await promise; // "Hello", не Promise
   console.log(result); // "Hello"
 }
@@ -1549,55 +1596,56 @@ async function demo() {
 // 3. Еквіваленти
 // Це:
 async function fetchData() {
-  const response = await fetch('/api/data');
+  const response = await fetch("/api/data");
   const data = await response.json();
   return data;
 }
 
 // Еквівалентно цьому:
 function fetchData() {
-  return fetch('/api/data')
-    .then(response => response.json());
+  return fetch("/api/data").then((response) => response.json());
 }
 ```
 
 **Практичні приклади:**
 
 **1. Послідовне виконання:**
+
 ```javascript
 async function processUserData() {
-  console.log('Починаємо...');
-  
-  const user = await fetchUser(1);        // Чекаємо 1s
-  console.log('Користувач:', user.name);
-  
-  const posts = await fetchUserPosts(1);  // Чекаємо ще 2s
-  console.log('Пости:', posts.length);
-  
+  console.log("Починаємо...");
+
+  const user = await fetchUser(1); // Чекаємо 1s
+  console.log("Користувач:", user.name);
+
+  const posts = await fetchUserPosts(1); // Чекаємо ще 2s
+  console.log("Пости:", posts.length);
+
   const profile = await buildProfile(user, posts); // Чекаємо ще 0.5s
-  console.log('Профіль готовий');
-  
+  console.log("Профіль готовий");
+
   return profile;
   // Загальний час: ~3.5s
 }
 ```
 
 **2. Паралельне виконання:**
+
 ```javascript
 async function processUserDataParallel() {
-  console.log('Починаємо паралельно...');
-  
+  console.log("Починаємо паралельно...");
+
   // Запускаємо всі Promise одночасно
   const userPromise = fetchUser(1);
   const postsPromise = fetchUserPosts(1);
   const settingsPromise = fetchUserSettings(1);
-  
+
   // Чекаємо результати
-  const user = await userPromise;        // ~1s
-  const posts = await postsPromise;      // ~2s (але вже виконується)
+  const user = await userPromise; // ~1s
+  const posts = await postsPromise; // ~2s (але вже виконується)
   const settings = await settingsPromise; // ~1.5s (але вже виконується)
-  
-  console.log('Всі дані готові');
+
+  console.log("Всі дані готові");
   return { user, posts, settings };
   // Загальний час: ~2s (найдовший запит)
 }
@@ -1607,30 +1655,31 @@ async function processUserDataWithAll() {
   const [user, posts, settings] = await Promise.all([
     fetchUser(1),
     fetchUserPosts(1),
-    fetchUserSettings(1)
+    fetchUserSettings(1),
   ]);
-  
+
   return { user, posts, settings };
 }
 ```
 
 **3. Цикли з async/await:**
+
 ```javascript
 // ❌ Неправильно - послідовне виконання
 async function processUsersBad(userIds) {
   const users = [];
-  
+
   for (const id of userIds) {
     const user = await fetchUser(id); // Чекає кожного по черзі
     users.push(user);
   }
-  
+
   return users; // Довго!
 }
 
 // ✅ Правильно - паралельне виконання
 async function processUsersGood(userIds) {
-  const promises = userIds.map(id => fetchUser(id));
+  const promises = userIds.map((id) => fetchUser(id));
   const users = await Promise.all(promises);
   return users; // Швидко!
 }
@@ -1643,7 +1692,7 @@ async function processUsersWithMap(userIds) {
       return { ...user, processed: true };
     })
   );
-  
+
   return users;
 }
 ```
@@ -1660,14 +1709,14 @@ async function fetchUserSafely(userId) {
   try {
     const user = await fetchUser(userId);
     const posts = await fetchUserPosts(userId);
-    
+
     return { user, posts };
   } catch (error) {
-    console.error('Помилка:', error.message);
-    
+    console.error("Помилка:", error.message);
+
     // Можемо повернути значення за замовчуванням
     return { user: null, posts: [] };
-    
+
     // Або пробросити помилку далі
     // throw error;
   }
@@ -1676,130 +1725,132 @@ async function fetchUserSafely(userId) {
 // Використання
 const result = await fetchUserSafely(999);
 if (result.user) {
-  console.log('Користувач знайдений');
+  console.log("Користувач знайдений");
 } else {
-  console.log('Користувач не знайдений, використовуємо дані за замовчуванням');
+  console.log("Користувач не знайдений, використовуємо дані за замовчуванням");
 }
 ```
 
 **Різні сценарії обробки:**
 
 **1. Обробка кожної операції окремо:**
+
 ```javascript
 async function fetchUserDataDetailed(userId) {
   let user = null;
   let posts = [];
   let settings = {};
-  
+
   // Обов'язкові дані
   try {
     user = await fetchUser(userId);
   } catch (error) {
-    console.error('Не вдалося завантажити користувача:', error);
-    throw new Error('Користувач обов\'язковий для роботи');
+    console.error("Не вдалося завантажити користувача:", error);
+    throw new Error("Користувач обов'язковий для роботи");
   }
-  
+
   // Необов'язкові дані
   try {
     posts = await fetchUserPosts(userId);
   } catch (error) {
-    console.warn('Не вдалося завантажити пости, використовуємо порожній масив');
+    console.warn("Не вдалося завантажити пости, використовуємо порожній масив");
     posts = []; // Значення за замовчуванням
   }
-  
+
   try {
     settings = await fetchUserSettings(userId);
   } catch (error) {
-    console.warn('Не вдалося завантажити налаштування');
+    console.warn("Не вдалося завантажити налаштування");
     settings = getDefaultSettings();
   }
-  
+
   return { user, posts, settings };
 }
 ```
 
 **2. Обробка паралельних операцій:**
+
 ```javascript
 async function fetchMultipleUsersWithErrors(userIds) {
   try {
     // Promise.allSettled не кидає помилок
-    const results = await Promise.allSettled(
-      userIds.map(id => fetchUser(id))
-    );
-    
+    const results = await Promise.allSettled(userIds.map((id) => fetchUser(id)));
+
     const users = [];
     const errors = [];
-    
+
     results.forEach((result, index) => {
-      if (result.status === 'fulfilled') {
+      if (result.status === "fulfilled") {
         users.push(result.value);
       } else {
         errors.push({
           userId: userIds[index],
-          error: result.reason
+          error: result.reason,
         });
       }
     });
-    
+
     if (errors.length > 0) {
-      console.warn('Деякі користувачі не завантажились:', errors);
+      console.warn("Деякі користувачі не завантажились:", errors);
     }
-    
+
     return users;
   } catch (error) {
-    console.error('Критична помилка:', error);
+    console.error("Критична помилка:", error);
     throw error;
   }
 }
 ```
 
 **3. Повторні спроби (retry pattern):**
+
 ```javascript
 async function fetchWithRetry(url, maxRetries = 3) {
   let lastError;
-  
+
   for (let attempt = 1; attempt <= maxRetries; attempt++) {
     try {
       console.log(`Спроба ${attempt}/${maxRetries}`);
       const response = await fetch(url);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP ${response.status}`);
       }
-      
+
       return await response.json();
     } catch (error) {
       lastError = error;
       console.warn(`Спроба ${attempt} не вдалась:`, error.message);
-      
+
       if (attempt < maxRetries) {
         // Чекаємо перед наступною спробою
-        await new Promise(resolve => setTimeout(resolve, 1000 * attempt));
+        await new Promise((resolve) => setTimeout(resolve, 1000 * attempt));
       }
     }
   }
-  
+
   throw new Error(`Всі ${maxRetries} спроб не вдались. Остання помилка: ${lastError.message}`);
 }
 
 // Використання
 try {
-  const data = await fetchWithRetry('/api/unreliable-endpoint');
-  console.log('Дані отримано:', data);
+  const data = await fetchWithRetry("/api/unreliable-endpoint");
+  console.log("Дані отримано:", data);
 } catch (error) {
-  console.error('Не вдалося отримати дані:', error.message);
+  console.error("Не вдалося отримати дані:", error.message);
 }
 ```
 
 **4. Timeout для async операцій:**
+
 ```javascript
 // Функція timeout
 function withTimeout(promise, timeoutMs) {
   return Promise.race([
     promise,
-    new Promise((_, reject) => 
+    new Promise((_, reject) =>
       setTimeout(() => reject(new Error(`Timeout ${timeoutMs}ms`)), timeoutMs)
-    )
+    ),
   ]);
 }
 
@@ -1809,10 +1860,10 @@ async function fetchUserWithTimeout(userId) {
     const user = await withTimeout(fetchUser(userId), 5000); // 5 секунд timeout
     return user;
   } catch (error) {
-    if (error.message.includes('Timeout')) {
-      console.error('Запит занадто довгий, скасовуємо');
+    if (error.message.includes("Timeout")) {
+      console.error("Запит занадто довгий, скасовуємо");
     } else {
-      console.error('Інша помилка:', error);
+      console.error("Інша помилка:", error);
     }
     throw error;
   }
@@ -1824,21 +1875,23 @@ async function fetchUserWithTimeout(userId) {
 ### 🎯 **Завдання для закріплення:**
 
 1. **Event Loop:** Що виведе цей код і в якому порядку?
+
    ```javascript
-   console.log('1');
-   
-   setTimeout(() => console.log('2'), 0);
-   
-   Promise.resolve().then(() => console.log('3'));
-   
-   console.log('4');
+   console.log("1");
+
+   setTimeout(() => console.log("2"), 0);
+
+   Promise.resolve().then(() => console.log("3"));
+
+   console.log("4");
    ```
 
 2. **Promise chaining:** Виправи цей код, щоб він працював правильно:
+
    ```javascript
    function loadUser(id) {
-     fetchUser(id).then(user => {
-       fetchUserPosts(user.id).then(posts => {
+     fetchUser(id).then((user) => {
+       fetchUserPosts(user.id).then((posts) => {
          console.log(user, posts);
        });
      });
@@ -1846,11 +1899,12 @@ async function fetchUserWithTimeout(userId) {
    ```
 
 3. **Promise.all практика:** Створи функцію, яка завантажує дані про користувача паралельно:
+
    ```javascript
    async function getUserDashboard(userId) {
      // Паралельно завантажити:
      // - fetchUser(userId)
-     // - fetchUserPosts(userId)  
+     // - fetchUserPosts(userId)
      // - fetchUserFriends(userId)
      // Повернути об'єкт з усіма даними
    }
@@ -1871,27 +1925,27 @@ async function fetchUserWithTimeout(userId) {
 
 ### 🔧 Основні методи - ТОП питання
 
-#### <span style="color: #4a90e2">**⭐ Чим відрізняється `map` від `forEach`?**</span> *(класика)*
+#### <span style="color: #4a90e2">**⭐ Чим відрізняється `map` від `forEach`?**</span> _(класика)_
 
 **Головна відмінність:** `map` повертає новий масив, `forEach` нічого не повертає.
 
-| Характеристика | `map` | `forEach` |
-|---|---|---|
-| **Повертає** | Новий масив | `undefined` |
-| **Мутує оригінал** | ❌ Ні | ❌ Ні |
-| **Призначення** | Трансформація даних | Виконання побічних ефектів |
-| **Функціональність** | Чисті функції | Імперативний стиль |
+| Характеристика       | `map`               | `forEach`                  |
+| -------------------- | ------------------- | -------------------------- |
+| **Повертає**         | Новий масив         | `undefined`                |
+| **Мутує оригінал**   | ❌ Ні               | ❌ Ні                      |
+| **Призначення**      | Трансформація даних | Виконання побічних ефектів |
+| **Функціональність** | Чисті функції       | Імперативний стиль         |
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
 
 // MAP - трансформує кожен елемент і повертає новий масив
-const doubled = numbers.map(num => num * 2);
+const doubled = numbers.map((num) => num * 2);
 console.log(doubled); // [2, 4, 6, 8, 10]
 console.log(numbers); // [1, 2, 3, 4, 5] (оригінал не змінився)
 
 // FOREACH - виконує операцію для кожного елементу
-const result = numbers.forEach(num => console.log(num * 2));
+const result = numbers.forEach((num) => console.log(num * 2));
 console.log(result); // undefined (нічого не повертає)
 // Виведе: 2, 4, 6, 8, 10 в консоль
 ```
@@ -1901,31 +1955,29 @@ console.log(result); // undefined (нічого не повертає)
 ```javascript
 // ✅ Трансформація даних
 const users = [
-  { name: 'Іван', age: 25 },
-  { name: 'Марія', age: 30 },
-  { name: 'Петро', age: 35 }
+  { name: "Іван", age: 25 },
+  { name: "Марія", age: 30 },
+  { name: "Петро", age: 35 },
 ];
 
-const userNames = users.map(user => user.name);
+const userNames = users.map((user) => user.name);
 // ['Іван', 'Марія', 'Петро']
 
-const userCards = users.map(user => ({
+const userCards = users.map((user) => ({
   id: user.name.toLowerCase(),
   displayName: user.name,
-  isAdult: user.age >= 18
+  isAdult: user.age >= 18,
 }));
 // [{ id: 'іван', displayName: 'Іван', isAdult: true }, ...]
 
 // ✅ Перетворення типів
-const stringNumbers = ['1', '2', '3', '4'];
-const actualNumbers = stringNumbers.map(str => Number(str));
+const stringNumbers = ["1", "2", "3", "4"];
+const actualNumbers = stringNumbers.map((str) => Number(str));
 // [1, 2, 3, 4]
 
 // ✅ Робота з React компонентами
-const items = ['apple', 'banana', 'orange'];
-const listItems = items.map(item => 
-  <li key={item}>{item}</li>
-);
+const items = ["apple", "banana", "orange"];
+const listItems = items.map((item) => <li key={item}>{item}</li>);
 ```
 
 **Коли використовувати `forEach`:**
@@ -1935,41 +1987,41 @@ const listItems = items.map(item =>
 const prices = [100, 200, 300];
 
 // Додавання в DOM
-prices.forEach(price => {
-  const element = document.createElement('div');
+prices.forEach((price) => {
+  const element = document.createElement("div");
   element.textContent = `$${price}`;
   document.body.appendChild(element);
 });
 
 // ✅ Логування
-const errors = ['Error 1', 'Error 2', 'Error 3'];
-errors.forEach(error => console.error(error));
+const errors = ["Error 1", "Error 2", "Error 3"];
+errors.forEach((error) => console.error(error));
 
 // ✅ Модифікація зовнішніх змінних
 let total = 0;
 const amounts = [10, 20, 30];
-amounts.forEach(amount => {
+amounts.forEach((amount) => {
   total += amount; // Змінює зовнішню змінну
 });
 console.log(total); // 60
 
 // ✅ Виклик методів об'єктів
 const connections = [connection1, connection2, connection3];
-connections.forEach(conn => conn.close()); // Закриваємо з'єднання
+connections.forEach((conn) => conn.close()); // Закриваємо з'єднання
 ```
 
 **Поширені помилки:**
 
 ```javascript
 // ❌ НЕ використовуй map для побічних ефектів
-numbers.map(num => console.log(num)); // Погано! Повертає [undefined, undefined, ...]
+numbers.map((num) => console.log(num)); // Погано! Повертає [undefined, undefined, ...]
 
 // ❌ НЕ ігноруй результат map
-numbers.map(num => num * 2); // Втрачається результат
+numbers.map((num) => num * 2); // Втрачається результат
 
 // ✅ Правильно
-numbers.forEach(num => console.log(num)); // Для побічних ефектів
-const doubled = numbers.map(num => num * 2); // Для трансформації
+numbers.forEach((num) => console.log(num)); // Для побічних ефектів
+const doubled = numbers.map((num) => num * 2); // Для трансформації
 ```
 
 ---
@@ -1981,14 +2033,14 @@ const doubled = numbers.map(num => num * 2); // Для трансформаці�
 
 ```javascript
 const users = [
-  { id: 1, name: 'Іван', age: 25, active: true },
-  { id: 2, name: 'Марія', age: 17, active: false },
-  { id: 3, name: 'Петро', age: 30, active: true },
-  { id: 4, name: 'Ольга', age: 22, active: true }
+  { id: 1, name: "Іван", age: 25, active: true },
+  { id: 2, name: "Марія", age: 17, active: false },
+  { id: 3, name: "Петро", age: 30, active: true },
+  { id: 4, name: "Ольга", age: 22, active: true },
 ];
 
 // FILTER - повертає масив всіх відповідних елементів
-const activeUsers = users.filter(user => user.active);
+const activeUsers = users.filter((user) => user.active);
 console.log(activeUsers);
 // [
 //   { id: 1, name: 'Іван', age: 25, active: true },
@@ -1996,127 +2048,126 @@ console.log(activeUsers);
 //   { id: 4, name: 'Ольга', age: 22, active: true }
 // ]
 
-const adults = users.filter(user => user.age >= 18);
+const adults = users.filter((user) => user.age >= 18);
 console.log(adults); // Масив з 3 користувачів
 
 // FIND - повертає перший відповідний елемент
-const firstActiveUser = users.find(user => user.active);
+const firstActiveUser = users.find((user) => user.active);
 console.log(firstActiveUser);
 // { id: 1, name: 'Іван', age: 25, active: true }
 
-const userById = users.find(user => user.id === 3);
+const userById = users.find((user) => user.id === 3);
 console.log(userById);
 // { id: 3, name: 'Петро', age: 30, active: true }
 ```
 
 **Відмінності `filter` vs `find`:**
 
-| Метод | Повертає | Кількість результатів | Якщо не знайдено |
-|---|---|---|---|
-| `filter` | Масив | Всі відповідні | Порожній масив `[]` |
-| `find` | Елемент | Перший відповідний | `undefined` |
+| Метод    | Повертає | Кількість результатів | Якщо не знайдено    |
+| -------- | -------- | --------------------- | ------------------- |
+| `filter` | Масив    | Всі відповідні        | Порожній масив `[]` |
+| `find`   | Елемент  | Перший відповідний    | `undefined`         |
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5, 6];
 
 // filter - всі парні числа
-const evens = numbers.filter(num => num % 2 === 0);
+const evens = numbers.filter((num) => num % 2 === 0);
 console.log(evens); // [2, 4, 6]
 
 // find - перше парне число
-const firstEven = numbers.find(num => num % 2 === 0);
+const firstEven = numbers.find((num) => num % 2 === 0);
 console.log(firstEven); // 2
 
 // Якщо не знайдено
-const bigNumbers = numbers.filter(num => num > 10);
+const bigNumbers = numbers.filter((num) => num > 10);
 console.log(bigNumbers); // [] (порожній масив)
 
-const bigNumber = numbers.find(num => num > 10);
+const bigNumber = numbers.find((num) => num > 10);
 console.log(bigNumber); // undefined
 ```
 
 **Практичні приклади:**
 
 **1. Пошук і фільтрація:**
+
 ```javascript
 const products = [
-  { id: 1, name: 'iPhone', price: 1000, category: 'electronics' },
-  { id: 2, name: 'Джинси', price: 80, category: 'clothing' },
-  { id: 3, name: 'MacBook', price: 2000, category: 'electronics' },
-  { id: 4, name: 'Футболка', price: 25, category: 'clothing' }
+  { id: 1, name: "iPhone", price: 1000, category: "electronics" },
+  { id: 2, name: "Джинси", price: 80, category: "clothing" },
+  { id: 3, name: "MacBook", price: 2000, category: "electronics" },
+  { id: 4, name: "Футболка", price: 25, category: "clothing" },
 ];
 
 // Фільтрація за категорією
-const electronics = products.filter(product => product.category === 'electronics');
+const electronics = products.filter((product) => product.category === "electronics");
 // [iPhone, MacBook]
 
 // Фільтрація за ціною
-const affordable = products.filter(product => product.price <= 100);
+const affordable = products.filter((product) => product.price <= 100);
 // [Джинси, Футболка]
 
 // Пошук конкретного товару
-const iPhone = products.find(product => product.name === 'iPhone');
+const iPhone = products.find((product) => product.name === "iPhone");
 // { id: 1, name: 'iPhone', price: 1000, category: 'electronics' }
 
 // Пошук за ID
-const productById = (id) => products.find(product => product.id === id);
+const productById = (id) => products.find((product) => product.id === id);
 console.log(productById(2)); // Джинси
 ```
 
 **2. Комбінування з іншими методами:**
+
 ```javascript
 // filter + map - отримати імена активних користувачів
-const activeUserNames = users
-  .filter(user => user.active)
-  .map(user => user.name);
+const activeUserNames = users.filter((user) => user.active).map((user) => user.name);
 // ['Іван', 'Петро', 'Ольга']
 
 // find + обробка undefined
 const findUserByName = (name) => {
-  const user = users.find(u => u.name === name);
-  return user ? user : { error: 'Користувача не знайдено' };
+  const user = users.find((u) => u.name === name);
+  return user ? user : { error: "Користувача не знайдено" };
 };
 
-console.log(findUserByName('Іван'));  // { id: 1, name: 'Іван', ... }
-console.log(findUserByName('Анна'));  // { error: 'Користувача не знайдено' }
+console.log(findUserByName("Іван")); // { id: 1, name: 'Іван', ... }
+console.log(findUserByName("Анна")); // { error: 'Користувача не знайдено' }
 ```
 
 **3. Складні умови:**
+
 ```javascript
 // Множинні умови
-const premiumUsers = users.filter(user => 
-  user.active && user.age >= 21
-);
+const premiumUsers = users.filter((user) => user.active && user.age >= 21);
 
 // Пошук за частковим співпадінням
-const searchUsers = (query) => users.filter(user => 
-  user.name.toLowerCase().includes(query.toLowerCase())
-);
+const searchUsers = (query) =>
+  users.filter((user) => user.name.toLowerCase().includes(query.toLowerCase()));
 
-console.log(searchUsers('ів')); // [{ name: 'Іван', ... }]
+console.log(searchUsers("ів")); // [{ name: 'Іван', ... }]
 
 // Використання з об'єктами
 const settings = [
-  { key: 'theme', value: 'dark' },
-  { key: 'language', value: 'uk' },
-  { key: 'notifications', value: true }
+  { key: "theme", value: "dark" },
+  { key: "language", value: "uk" },
+  { key: "notifications", value: true },
 ];
 
 const getSetting = (key) => {
-  const setting = settings.find(s => s.key === key);
+  const setting = settings.find((s) => s.key === key);
   return setting ? setting.value : null;
 };
 
-console.log(getSetting('theme')); // 'dark'
+console.log(getSetting("theme")); // 'dark'
 ```
 
 ---
 
-#### <span style="color: #4a90e2">**⭐ Що робить `reduce`?**</span> *(часто питають)*
+#### <span style="color: #4a90e2">**⭐ Що робить `reduce`?**</span> _(часто питають)_
 
 **`reduce()`** - зводить масив до одного значення, послідовно застосовуючи функцію до кожного елементу.
 
 **Синтаксис:**
+
 ```javascript
 array.reduce((accumulator, currentValue, currentIndex, array) => {
   // логіка
@@ -2135,7 +2186,7 @@ console.log(sum); // 15
 
 // Покроково:
 // acc = 0, num = 1 → acc = 0 + 1 = 1
-// acc = 1, num = 2 → acc = 1 + 2 = 3  
+// acc = 1, num = 2 → acc = 1 + 2 = 3
 // acc = 3, num = 3 → acc = 3 + 3 = 6
 // acc = 6, num = 4 → acc = 6 + 4 = 10
 // acc = 10, num = 5 → acc = 10 + 5 = 15
@@ -2145,7 +2196,7 @@ const product = numbers.reduce((acc, num) => acc * num, 1);
 console.log(product); // 120
 
 // 3. Найбільший елемент
-const max = numbers.reduce((acc, num) => num > acc ? num : acc, -Infinity);
+const max = numbers.reduce((acc, num) => (num > acc ? num : acc), -Infinity);
 console.log(max); // 5
 
 // Або простіше:
@@ -2156,8 +2207,9 @@ console.log(max2); // 5
 **Складніші приклади:**
 
 **1. Підрахунок елементів:**
+
 ```javascript
-const fruits = ['apple', 'banana', 'apple', 'orange', 'banana', 'apple'];
+const fruits = ["apple", "banana", "apple", "orange", "banana", "apple"];
 
 const fruitCount = fruits.reduce((acc, fruit) => {
   acc[fruit] = (acc[fruit] || 0) + 1;
@@ -2169,22 +2221,23 @@ console.log(fruitCount);
 ```
 
 **2. Групування об'єктів:**
+
 ```javascript
 const people = [
-  { name: 'Іван', age: 25, department: 'IT' },
-  { name: 'Марія', age: 30, department: 'HR' },
-  { name: 'Петро', age: 35, department: 'IT' },
-  { name: 'Ольга', age: 28, department: 'Marketing' }
+  { name: "Іван", age: 25, department: "IT" },
+  { name: "Марія", age: 30, department: "HR" },
+  { name: "Петро", age: 35, department: "IT" },
+  { name: "Ольга", age: 28, department: "Marketing" },
 ];
 
 // Групування за відділом
 const byDepartment = people.reduce((acc, person) => {
   const dept = person.department;
-  
+
   if (!acc[dept]) {
     acc[dept] = [];
   }
-  
+
   acc[dept].push(person);
   return acc;
 }, {});
@@ -2198,11 +2251,12 @@ console.log(byDepartment);
 ```
 
 **3. Трансформація масиву в об'єкт:**
+
 ```javascript
 const users = [
-  { id: 1, name: 'Іван', email: 'ivan@example.com' },
-  { id: 2, name: 'Марія', email: 'maria@example.com' },
-  { id: 3, name: 'Петро', email: 'petro@example.com' }
+  { id: 1, name: "Іван", email: "ivan@example.com" },
+  { id: 2, name: "Марія", email: "maria@example.com" },
+  { id: 3, name: "Петро", email: "petro@example.com" },
 ];
 
 // Створення lookup таблиці по ID
@@ -2221,8 +2275,13 @@ const usersByEmail = users.reduce((acc, user) => {
 ```
 
 **4. Флетенінг (розгортання) масивів:**
+
 ```javascript
-const nested = [[1, 2], [3, 4], [5, 6]];
+const nested = [
+  [1, 2],
+  [3, 4],
+  [5, 6],
+];
 
 const flattened = nested.reduce((acc, arr) => acc.concat(arr), []);
 console.log(flattened); // [1, 2, 3, 4, 5, 6]
@@ -2232,6 +2291,7 @@ const flattened2 = nested.reduce((acc, arr) => [...acc, ...arr], []);
 ```
 
 **5. Створення pipeline функцій:**
+
 ```javascript
 const numbers = [1, 2, 3, 4, 5];
 
@@ -2239,7 +2299,7 @@ const numbers = [1, 2, 3, 4, 5];
 const result = numbers.reduce((acc, num) => {
   // Фільтруємо парні, подвоюємо і додаємо до суми
   if (num % 2 === 0) {
-    return acc + (num * 2);
+    return acc + num * 2;
   }
   return acc;
 }, 0);
@@ -2248,30 +2308,34 @@ console.log(result); // 12 (2*2 + 4*2 = 4 + 8 = 12)
 
 // Еквівалентно:
 const result2 = numbers
-  .filter(num => num % 2 === 0)  // [2, 4]
-  .map(num => num * 2)           // [4, 8]
+  .filter((num) => num % 2 === 0) // [2, 4]
+  .map((num) => num * 2) // [4, 8]
   .reduce((acc, num) => acc + num, 0); // 12
 ```
 
 **6. Обчислення статистики:**
+
 ```javascript
 const grades = [85, 90, 78, 92, 88, 76, 95];
 
-const stats = grades.reduce((acc, grade) => {
-  acc.sum += grade;
-  acc.count++;
-  acc.min = Math.min(acc.min, grade);
-  acc.max = Math.max(acc.max, grade);
-  acc.average = acc.sum / acc.count;
-  
-  return acc;
-}, {
-  sum: 0,
-  count: 0,
-  min: Infinity,
-  max: -Infinity,
-  average: 0
-});
+const stats = grades.reduce(
+  (acc, grade) => {
+    acc.sum += grade;
+    acc.count++;
+    acc.min = Math.min(acc.min, grade);
+    acc.max = Math.max(acc.max, grade);
+    acc.average = acc.sum / acc.count;
+
+    return acc;
+  },
+  {
+    sum: 0,
+    count: 0,
+    min: Infinity,
+    max: -Infinity,
+    average: 0,
+  }
+);
 
 console.log(stats);
 // { sum: 604, count: 7, min: 76, max: 95, average: 86.29 }
@@ -2309,12 +2373,12 @@ const correctObj = items.reduce((acc, item) => {
 **`slice()`** - витягує частину масиву, **НЕ мутує** оригінал  
 **`splice()`** - видаляє/додає елементи, **мутує** оригінал
 
-| Характеристика | `slice` | `splice` |
-|---|---|---|
-| **Мутує оригінал** | ❌ Ні | ✅ Так |
-| **Повертає** | Новий масив (копію частини) | Масив видалених елементів |
-| **Параметри** | `(start, end)` | `(start, deleteCount, ...items)` |
-| **Призначення** | Копіювання частини | Модифікація масиву |
+| Характеристика     | `slice`                     | `splice`                         |
+| ------------------ | --------------------------- | -------------------------------- |
+| **Мутує оригінал** | ❌ Ні                       | ✅ Так                           |
+| **Повертає**       | Новий масив (копію частини) | Масив видалених елементів        |
+| **Параметри**      | `(start, end)`              | `(start, deleteCount, ...items)` |
+| **Призначення**    | Копіювання частини          | Модифікація масиву               |
 
 ```javascript
 const numbers = [1, 2, 3, 4, 5, 6];
@@ -2333,13 +2397,14 @@ console.log(numbers); // [1, 5, 6] (оригінал змінився!)
 **Детальне порівняння:**
 
 **`slice(start, end)`:**
+
 ```javascript
-const arr = ['a', 'b', 'c', 'd', 'e'];
+const arr = ["a", "b", "c", "d", "e"];
 
 // Базове використання
 console.log(arr.slice(1, 3)); // ['b', 'c']
-console.log(arr.slice(2));    // ['c', 'd', 'e'] (до кінця)
-console.log(arr.slice(-2));   // ['d', 'e'] (останні 2)
+console.log(arr.slice(2)); // ['c', 'd', 'e'] (до кінця)
+console.log(arr.slice(-2)); // ['d', 'e'] (останні 2)
 console.log(arr.slice(-3, -1)); // ['c', 'd'] (з кінця)
 
 // Копіювання всього масиву
@@ -2352,24 +2417,25 @@ console.log(arr); // ['a', 'b', 'c', 'd', 'e']
 ```
 
 **`splice(start, deleteCount, ...itemsToAdd)`:**
+
 ```javascript
-let fruits = ['apple', 'banana', 'orange', 'grape'];
+let fruits = ["apple", "banana", "orange", "grape"];
 
 // 1. Видалення елементів
 const removed = fruits.splice(1, 2); // Видалити 2 елементи з індексу 1
 console.log(removed); // ['banana', 'orange']
-console.log(fruits);  // ['apple', 'grape']
+console.log(fruits); // ['apple', 'grape']
 
 // 2. Додавання елементів
-fruits.splice(1, 0, 'kiwi', 'mango'); // Вставити в індекс 1, не видаляючи
+fruits.splice(1, 0, "kiwi", "mango"); // Вставити в індекс 1, не видаляючи
 console.log(fruits); // ['apple', 'kiwi', 'mango', 'grape']
 
 // 3. Заміна елементів
-fruits.splice(1, 2, 'pear'); // Видалити 2, вставити 1
+fruits.splice(1, 2, "pear"); // Видалити 2, вставити 1
 console.log(fruits); // ['apple', 'pear', 'grape']
 
 // 4. Додавання в кінець (альтернатива push)
-fruits.splice(fruits.length, 0, 'cherry');
+fruits.splice(fruits.length, 0, "cherry");
 console.log(fruits); // ['apple', 'pear', 'grape', 'cherry']
 
 // 5. Видалення з кінця
@@ -2380,12 +2446,13 @@ console.log(fruits); // ['apple', 'pear', 'grape']
 **Практичні приклади:**
 
 **1. Робота зі списком завдань:**
+
 ```javascript
 let tasks = [
-  { id: 1, text: 'Купити молоко', done: false },
-  { id: 2, text: 'Прочитати книгу', done: true },
-  { id: 3, text: 'Зробити зарядку', done: false },
-  { id: 4, text: 'Подзвонити мамі', done: false }
+  { id: 1, text: "Купити молоко", done: false },
+  { id: 2, text: "Прочитати книгу", done: true },
+  { id: 3, text: "Зробити зарядку", done: false },
+  { id: 4, text: "Подзвонити мамі", done: false },
 ];
 
 // slice - отримати перші 2 завдання (для пагінації)
@@ -2394,13 +2461,14 @@ console.log(firstTwo); // Перші 2 завдання
 console.log(tasks.length); // 4 (оригінал не змінився)
 
 // splice - видалити виконане завдання
-const doneTaskIndex = tasks.findIndex(task => task.done);
+const doneTaskIndex = tasks.findIndex((task) => task.done);
 const removedTasks = tasks.splice(doneTaskIndex, 1);
 console.log(tasks.length); // 3 (завдання видалено)
 console.log(removedTasks); // [{ id: 2, text: 'Прочитати книгу', done: true }]
 ```
 
 **2. Вставка елементів у відсортований масив:**
+
 ```javascript
 let sortedNumbers = [1, 3, 5, 7, 9];
 
@@ -2410,7 +2478,7 @@ function insertInSorted(arr, value) {
   while (insertIndex < arr.length && arr[insertIndex] < value) {
     insertIndex++;
   }
-  
+
   // Використовуємо splice для вставки
   arr.splice(insertIndex, 0, value);
   return arr;
@@ -2424,22 +2492,23 @@ console.log(sortedNumbers); // [0, 1, 3, 4, 5, 7, 9]
 ```
 
 **3. Реалізація undo/redo функціональності:**
+
 ```javascript
 class ActionHistory {
   constructor() {
     this.history = [];
     this.currentIndex = -1;
   }
-  
+
   addAction(action) {
     // Видаляємо всі дії після поточного індексу (для redo)
     this.history.splice(this.currentIndex + 1);
-    
+
     // Додаємо нову дію
     this.history.push(action);
     this.currentIndex++;
   }
-  
+
   undo() {
     if (this.currentIndex > 0) {
       this.currentIndex--;
@@ -2447,7 +2516,7 @@ class ActionHistory {
     }
     return null;
   }
-  
+
   redo() {
     if (this.currentIndex < this.history.length - 1) {
       this.currentIndex++;
@@ -2455,7 +2524,7 @@ class ActionHistory {
     }
     return null;
   }
-  
+
   // slice для безпечного отримання історії
   getHistory() {
     return this.history.slice(); // Копія, щоб не змінювали ззовні
@@ -2498,25 +2567,27 @@ playlist.splice(1, 1, newSong); // Замінити 2-гу пісню
 ### 🎯 **Завдання для закріплення:**
 
 1. **map vs forEach:** Що не так з цим кодом?
+
    ```javascript
    const numbers = [1, 2, 3];
-   const doubled = numbers.forEach(num => num * 2);
+   const doubled = numbers.forEach((num) => num * 2);
    console.log(doubled); // Що виведе?
    ```
 
 2. **filter + find:** Напиши функції:
+
    ```javascript
    const products = [
-     { id: 1, name: 'iPhone', price: 1000, inStock: true },
-     { id: 2, name: 'Samsung', price: 800, inStock: false },
-     { id: 3, name: 'Pixel', price: 700, inStock: true }
+     { id: 1, name: "iPhone", price: 1000, inStock: true },
+     { id: 2, name: "Samsung", price: 800, inStock: false },
+     { id: 3, name: "Pixel", price: 700, inStock: true },
    ];
-   
+
    // Функція для отримання товарів в наявності
    function getAvailableProducts(products) {
      // твоя реалізація
    }
-   
+
    // Функція для пошуку товару за ID
    function findProductById(products, id) {
      // твоя реалізація
@@ -2524,24 +2595,26 @@ playlist.splice(1, 1, newSong); // Замінити 2-гу пісню
    ```
 
 3. **reduce практика:** Реалізуй функції через reduce:
+
    ```javascript
    const numbers = [1, 2, 3, 4, 5];
-   
+
    // Знайти максимальне число
    const max = numbers.reduce(/* твоя реалізація */);
-   
+
    // Створити об'єкт {число: число²}
    const squared = numbers.reduce(/* твоя реалізація */, {});
    // Результат: {1: 1, 2: 4, 3: 9, 4: 16, 5: 25}
    ```
 
 4. **slice vs splice:** Виправи функції:
+
    ```javascript
    // Функція має повертати копію без першого елементу
    function removeFirstCopy(arr) {
      return arr.splice(1); // ❌ Що не так?
    }
-   
+
    // Функція має видалити елемент за індексом з оригінального масиву
    function removeByIndex(arr, index) {
      return arr.slice(index, 1); // ❌ Що не так?
@@ -2565,9 +2638,9 @@ playlist.splice(1, 1, newSong); // Замінити 2-гу пісню
 const numbers = [1, 2, 3, 4, 5];
 
 const [first, second, third] = numbers;
-console.log(first);  // 1
+console.log(first); // 1
 console.log(second); // 2
-console.log(third);  // 3
+console.log(third); // 3
 
 // Пропускання елементів
 const [a, , c] = [1, 2, 3]; // Пропускаємо другий елемент
@@ -2590,7 +2663,8 @@ console.log(tail); // [2, 3, 4, 5]
 
 ```javascript
 // 1. Обмін значень змінних
-let a = 10, b = 20;
+let a = 10,
+  b = 20;
 [a, b] = [b, a]; // Обмін без додаткової змінної
 console.log(a); // 20
 console.log(b); // 10
@@ -2606,12 +2680,12 @@ const fullName = "Іван Петров";
 const [firstName, lastName] = fullName.split(" ");
 
 // 4. Ітерація з entries()
-const users = ['Іван', 'Марія', 'Петро'];
+const users = ["Іван", "Марія", "Петро"];
 for (const [index, user] of users.entries()) {
   console.log(`${index}: ${user}`);
 }
 // 0: Іван
-// 1: Марія  
+// 1: Марія
 // 2: Петро
 ```
 
@@ -2620,29 +2694,29 @@ for (const [index, user] of users.entries()) {
 ```javascript
 // Базовий синтаксис
 const person = {
-  name: 'Іван',
+  name: "Іван",
   age: 25,
-  city: 'Київ',
-  country: 'Україна'
+  city: "Київ",
+  country: "Україна",
 };
 
 const { name, age, city } = person;
 console.log(name); // 'Іван'
-console.log(age);  // 25
+console.log(age); // 25
 console.log(city); // 'Київ'
 
 // Перейменування змінних
 const { name: personName, age: personAge } = person;
 console.log(personName); // 'Іван'
-console.log(personAge);  // 25
+console.log(personAge); // 25
 
 // Значення за замовчуванням
-const { name, age, profession = 'Developer' } = person;
+const { name, age, profession = "Developer" } = person;
 console.log(profession); // 'Developer'
 
 // Комбінування перейменування і значень за замовчуванням
 const { name: fullName, salary: currentSalary = 50000 } = person;
-console.log(fullName);      // 'Іван'
+console.log(fullName); // 'Іван'
 console.log(currentSalary); // 50000
 ```
 
@@ -2651,26 +2725,26 @@ console.log(currentSalary); // 50000
 ```javascript
 const user = {
   id: 1,
-  name: 'Іван',
+  name: "Іван",
   address: {
-    street: 'Хрещатик',
-    city: 'Київ',
-    zipCode: '01001'
+    street: "Хрещатик",
+    city: "Київ",
+    zipCode: "01001",
   },
-  hobbies: ['читання', 'спорт', 'музика']
+  hobbies: ["читання", "спорт", "музика"],
 };
 
 // Вкладена деструктуризація об'єктів
 const {
   name,
   address: { city, zipCode },
-  hobbies: [firstHobby, ...otherHobbies]
+  hobbies: [firstHobby, ...otherHobbies],
 } = user;
 
-console.log(name);         // 'Іван'
-console.log(city);         // 'Київ'
-console.log(zipCode);      // '01001'
-console.log(firstHobby);   // 'читання'
+console.log(name); // 'Іван'
+console.log(city); // 'Київ'
+console.log(zipCode); // '01001'
+console.log(firstHobby); // 'читання'
 console.log(otherHobbies); // ['спорт', 'музика']
 
 // УВАГА: address змінна не створюється, тільки її властивості
@@ -2679,10 +2753,10 @@ console.log(otherHobbies); // ['спорт', 'музика']
 // Щоб отримати і сам об'єкт, і його властивості:
 const {
   address,
-  address: { street }
+  address: { street },
 } = user;
 console.log(address); // { street: 'Хрещатик', city: 'Київ', zipCode: '01001' }
-console.log(street);  // 'Хрещатик'
+console.log(street); // 'Хрещатик'
 ```
 
 **Деструктуризація параметрів функції:**
@@ -2694,15 +2768,15 @@ function createUser(name, age, email, city) {
 }
 
 // Використовуємо деструктуризацію
-function createUser({ name, age, email, city = 'Київ' }) {
+function createUser({ name, age, email, city = "Київ" }) {
   return { name, age, email, city };
 }
 
 // Виклик
 const userData = {
-  name: 'Марія',
+  name: "Марія",
   age: 28,
-  email: 'maria@example.com'
+  email: "maria@example.com",
 };
 const user = createUser(userData);
 
@@ -2717,25 +2791,26 @@ processCoordinates([10, 20]); // X: 10, Y: 20, Z: 0
 **Практичні застосування:**
 
 **1. Робота з API відповідями:**
+
 ```javascript
 // Типова відповідь API
 const apiResponse = {
   data: {
     users: [
-      { id: 1, name: 'Іван', role: 'admin' },
-      { id: 2, name: 'Марія', role: 'user' }
-    ]
+      { id: 1, name: "Іван", role: "admin" },
+      { id: 2, name: "Марія", role: "user" },
+    ],
   },
   meta: {
     total: 2,
-    page: 1
-  }
+    page: 1,
+  },
 };
 
 // Деструктуризація для витягування потрібних даних
 const {
   data: { users },
-  meta: { total }
+  meta: { total },
 } = apiResponse;
 
 console.log(users); // Масив користувачів
@@ -2743,8 +2818,9 @@ console.log(total); // 2
 ```
 
 **2. Конфігурація компонентів (React):**
+
 ```javascript
-function UserCard({ name, age, avatar = '/default-avatar.png' }) {
+function UserCard({ name, age, avatar = "/default-avatar.png" }) {
   return (
     <div>
       <img src={avatar} alt={name} />
@@ -2755,15 +2831,16 @@ function UserCard({ name, age, avatar = '/default-avatar.png' }) {
 }
 
 // Використання
-<UserCard name="Іван" age={25} />
+<UserCard name="Іван" age={25} />;
 ```
 
 **3. Обробка помилок:**
+
 ```javascript
 try {
-  const response = await fetch('/api/user');
+  const response = await fetch("/api/user");
   const { data, error } = await response.json();
-  
+
   if (error) {
     const { message, code } = error;
     console.error(`Error ${code}: ${message}`);
@@ -2772,15 +2849,16 @@ try {
     console.log(`User: ${name} (${email})`);
   }
 } catch (err) {
-  console.error('Network error:', err);
+  console.error("Network error:", err);
 }
 ```
 
 **4. Імпорт модулів:**
+
 ```javascript
 // ES6 імпорти використовують деструктуризацію
-import { useState, useEffect } from 'react';
-import { map, filter, reduce } from 'lodash';
+import { useState, useEffect } from "react";
+import { map, filter, reduce } from "lodash";
 
 // Named експорти
 export const { PI, E } = Math;
@@ -2841,7 +2919,7 @@ console.log(copy); // [1, 2, 3]
 console.log(copy === numbers); // false (різні об'єкти)
 
 // 3. Перетворення NodeList в масив
-const divs = document.querySelectorAll('div');
+const divs = document.querySelectorAll("div");
 const divsArray = [...divs]; // Тепер можна використовувати map, filter і т.д.
 
 // 4. Розгортання рядка
@@ -2859,13 +2937,13 @@ const minScore = Math.min(...scores); // 78
 
 ```javascript
 const person = {
-  name: 'Іван',
-  age: 25
+  name: "Іван",
+  age: 25,
 };
 
 const address = {
-  city: 'Київ',
-  country: 'Україна'
+  city: "Київ",
+  country: "Україна",
 };
 
 // 1. Об'єднання об'єктів
@@ -2877,15 +2955,15 @@ console.log(fullInfo);
 const updatedPerson = {
   ...person,
   age: 26,
-  profession: 'Developer'
+  profession: "Developer",
 };
 console.log(updatedPerson);
 // { name: 'Іван', age: 26, profession: 'Developer' }
 console.log(person); // { name: 'Іван', age: 25 } (оригінал не змінився)
 
 // 3. Порядок має значення (останні властивості перезаписують попередні)
-const config = { theme: 'dark', size: 'large' };
-const userPrefs = { theme: 'light', animation: true };
+const config = { theme: "dark", size: "large" };
+const userPrefs = { theme: "light", animation: true };
 
 const finalConfig = { ...config, ...userPrefs };
 console.log(finalConfig);
@@ -2895,25 +2973,27 @@ console.log(finalConfig);
 **Практичні застосування Spread:**
 
 **1. React state updates:**
+
 ```javascript
 // Оновлення стану без мутації
 const [user, setUser] = useState({
-  name: 'Іван',
-  preferences: { theme: 'dark', lang: 'uk' }
+  name: "Іван",
+  preferences: { theme: "dark", lang: "uk" },
 });
 
 // Оновлення користувача
-setUser(prevUser => ({
+setUser((prevUser) => ({
   ...prevUser,
   age: 26,
   preferences: {
     ...prevUser.preferences,
-    theme: 'light'
-  }
+    theme: "light",
+  },
 }));
 ```
 
 **2. Функції з довільною кількістю аргументів:**
+
 ```javascript
 function sum(...numbers) {
   return numbers.reduce((acc, num) => acc + num, 0);
@@ -2925,25 +3005,26 @@ console.log(sum(1, 2, 3, 4, 5, 6)); // 21
 ```
 
 **3. Клонування з змінами:**
+
 ```javascript
 const originalTodo = {
   id: 1,
-  text: 'Купити молоко',
+  text: "Купити молоко",
   completed: false,
-  tags: ['grocery', 'urgent']
+  tags: ["grocery", "urgent"],
 };
 
 // Shallow copy з оновленнями
 const completedTodo = {
   ...originalTodo,
   completed: true,
-  updatedAt: new Date()
+  updatedAt: new Date(),
 };
 
 // Deep copy (обережно з вкладеними об'єктами/масивами)
 const todoWithNewTag = {
   ...originalTodo,
-  tags: [...originalTodo.tags, 'home']
+  tags: [...originalTodo.tags, "home"],
 };
 ```
 
@@ -2958,10 +3039,10 @@ const todoWithNewTag = {
 ```javascript
 // 1. Збирання параметрів в масив
 function sum(first, second, ...rest) {
-  console.log('First:', first);     // 1
-  console.log('Second:', second);   // 2
-  console.log('Rest:', rest);       // [3, 4, 5, 6]
-  
+  console.log("First:", first); // 1
+  console.log("Second:", second); // 2
+  console.log("Rest:", rest); // [3, 4, 5, 6]
+
   return first + second + rest.reduce((acc, num) => acc + num, 0);
 }
 
@@ -2973,8 +3054,8 @@ function logger(level, ...messages) {
   console.log(`[${timestamp}] ${level.toUpperCase()}:`, ...messages);
 }
 
-logger('info', 'User logged in', 'ID: 123');
-logger('error', 'Database connection failed', 'Retrying...', 'Attempt 1');
+logger("info", "User logged in", "ID: 123");
+logger("error", "Database connection failed", "Retrying...", "Attempt 1");
 
 // 3. Wrapper функції
 function fetchWithLogging(url, ...fetchOptions) {
@@ -2982,7 +3063,7 @@ function fetchWithLogging(url, ...fetchOptions) {
   return fetch(url, ...fetchOptions); // Передаємо всі опції далі
 }
 
-fetchWithLogging('/api/users', { method: 'POST', body: JSON.stringify(data) });
+fetchWithLogging("/api/users", { method: "POST", body: JSON.stringify(data) });
 ```
 
 **Rest в деструктуризації масивів:**
@@ -3014,18 +3095,18 @@ const [latestPost, ...olderPosts] = posts.sort((a, b) => b.date - a.date);
 ```javascript
 const user = {
   id: 1,
-  name: 'Іван',
+  name: "Іван",
   age: 25,
-  email: 'ivan@example.com',
-  city: 'Київ',
-  country: 'Україна'
+  email: "ivan@example.com",
+  city: "Київ",
+  country: "Україна",
 };
 
 // Витягуємо name та age, решта в rest об'єкт
 const { name, age, ...contactInfo } = user;
-console.log(name);        // 'Іван'
-console.log(age);         // 25
-console.log(contactInfo); 
+console.log(name); // 'Іван'
+console.log(age); // 25
+console.log(contactInfo);
 // { id: 1, email: 'ivan@example.com', city: 'Київ', country: 'Україна' }
 
 // Практичне використання - видалення властивостей
@@ -3047,7 +3128,8 @@ console.log(...arr); // 1 2 3 (розгорнули)
 const newArr = [...arr, 4, 5]; // Розгорнули в новий масив
 
 // REST - збирає окремі елементи в колекцію
-function collect(...items) { // Збирає аргументи в масив
+function collect(...items) {
+  // Збирає аргументи в масив
   return items;
 }
 console.log(collect(1, 2, 3)); // [1, 2, 3]
@@ -3058,11 +3140,12 @@ const [first, ...others] = [1, 2, 3, 4]; // Збирає в масив others
 **Практичні застосування Rest:**
 
 **1. Утилітні функції:**
+
 ```javascript
 // Функція для створення URL з query параметрами
 function createURL(baseURL, ...queryParams) {
   const url = new URL(baseURL);
-  queryParams.forEach(param => {
+  queryParams.forEach((param) => {
     Object.entries(param).forEach(([key, value]) => {
       url.searchParams.append(key, value);
     });
@@ -3071,13 +3154,14 @@ function createURL(baseURL, ...queryParams) {
 }
 
 const url = createURL(
-  'https://api.example.com/users',
+  "https://api.example.com/users",
   { page: 1, limit: 10 },
-  { sort: 'name', order: 'asc' }
+  { sort: "name", order: "asc" }
 );
 ```
 
 **2. Middleware pattern:**
+
 ```javascript
 function composeMiddleware(initialValue, ...middlewares) {
   return middlewares.reduce((value, middleware) => {
@@ -3085,32 +3169,33 @@ function composeMiddleware(initialValue, ...middlewares) {
   }, initialValue);
 }
 
-const addOne = x => x + 1;
-const double = x => x * 2;
-const toString = x => x.toString();
+const addOne = (x) => x + 1;
+const double = (x) => x * 2;
+const toString = (x) => x.toString();
 
 const result = composeMiddleware(5, addOne, double, toString);
 // 5 -> 6 -> 12 -> "12"
 ```
 
 **3. Обробка подій з додатковими даними:**
+
 ```javascript
 function handleClick(event, ...additionalData) {
   event.preventDefault();
-  
-  console.log('Click event:', event);
-  console.log('Additional data:', additionalData);
-  
+
+  console.log("Click event:", event);
+  console.log("Additional data:", additionalData);
+
   // Обробка додаткових даних
-  additionalData.forEach(data => {
-    if (typeof data === 'function') data();
-    else console.log('Data:', data);
+  additionalData.forEach((data) => {
+    if (typeof data === "function") data();
+    else console.log("Data:", data);
   });
 }
 
 // Використання
-button.addEventListener('click', (e) => 
-  handleClick(e, 'user-id-123', () => trackEvent('button-click'))
+button.addEventListener("click", (e) =>
+  handleClick(e, "user-id-123", () => trackEvent("button-click"))
 );
 ```
 
@@ -3118,7 +3203,7 @@ button.addEventListener('click', (e) =>
 
 ### 📝 Template Literals
 
-#### <span style="color: #4a90e2">**Що таке template literals?**</span> *(backticks)*
+#### <span style="color: #4a90e2">**Що таке template literals?**</span> _(backticks)_
 
 **Template literals** - це рядки з backticks (`) з підтримкою інтерполяції змінних і багаторядкових рядків.
 
@@ -3126,9 +3211,9 @@ button.addEventListener('click', (e) =>
 
 ```javascript
 // Звичайні рядки
-const name = 'Іван';
+const name = "Іван";
 const age = 25;
-const greeting = 'Привіт, ' + name + '! Тобі ' + age + ' років.';
+const greeting = "Привіт, " + name + "! Тобі " + age + " років.";
 
 // Template literals
 const greeting2 = `Привіт, ${name}! Тобі ${age} років.`;
@@ -3142,9 +3227,7 @@ const multiline = `
 `;
 
 // Порівняйте зі звичайними рядками
-const multilineOld = 'Це перший рядок\n' +
-                     'Це другий рядок\n' +
-                     'А це третій рядок';
+const multilineOld = "Це перший рядок\n" + "Це другий рядок\n" + "А це третій рядок";
 ```
 
 **Інтерполяція виразів:**
@@ -3158,12 +3241,14 @@ const total = `Загальна сума: $${price * (1 + tax)}`;
 console.log(total); // "Загальна сума: $120"
 
 // Умовні вирази
-const user = { name: 'Іван', isPremium: true };
-const message = `Привіт, ${user.name}! ${user.isPremium ? 'Ви Premium користувач' : 'Оновіться до Premium'}`;
+const user = { name: "Іван", isPremium: true };
+const message = `Привіт, ${user.name}! ${
+  user.isPremium ? "Ви Premium користувач" : "Оновіться до Premium"
+}`;
 
 // Виклик функцій
 function formatDate(date) {
-  return date.toLocaleDateString('uk-UA');
+  return date.toLocaleDateString("uk-UA");
 }
 
 const today = new Date();
@@ -3183,21 +3268,21 @@ function createUserCard(user) {
         <span>Постів: ${user.postsCount}</span>
         <span>Підписників: ${user.followersCount}</span>
       </div>
-      ${user.isVerified ? '<div class="badge">Верифікований</div>' : ''}
+      ${user.isVerified ? '<div class="badge">Верифікований</div>' : ""}
     </div>
   `;
 }
 
 const user = {
-  name: 'Іван Петров',
-  email: 'ivan@example.com',
-  avatar: '/avatars/ivan.jpg',
+  name: "Іван Петров",
+  email: "ivan@example.com",
+  avatar: "/avatars/ivan.jpg",
   postsCount: 42,
   followersCount: 1337,
-  isVerified: true
+  isVerified: true,
 };
 
-document.getElementById('user-container').innerHTML = createUserCard(user);
+document.getElementById("user-container").innerHTML = createUserCard(user);
 ```
 
 **SQL запити:**
@@ -3216,7 +3301,7 @@ function getUsersQuery(minAge, city) {
 }
 
 // ⚠️ УВАГА: У реальних додатках використовуйте підготовлені запити!
-const query = getUsersQuery(18, 'Київ');
+const query = getUsersQuery(18, "Київ");
 ```
 
 **Tagged Template Literals (просунуті):**
@@ -3225,25 +3310,25 @@ const query = getUsersQuery(18, 'Київ');
 // Функція-тег для обробки template literal
 function highlight(strings, ...values) {
   return strings.reduce((result, string, i) => {
-    const value = values[i] ? `<mark>${values[i]}</mark>` : '';
+    const value = values[i] ? `<mark>${values[i]}</mark>` : "";
     return result + string + value;
-  }, '');
+  }, "");
 }
 
-const searchTerm = 'JavaScript';
+const searchTerm = "JavaScript";
 const text = highlight`Вивчаю ${searchTerm} програмування на практиці`;
 // "Вивчаю <mark>JavaScript</mark> програмування на практиці"
 
 // Практичний приклад - безпечний HTML
 function safe(strings, ...values) {
   return strings.reduce((result, string, i) => {
-    let value = values[i] || '';
+    let value = values[i] || "";
     // Екрануємо HTML
-    if (typeof value === 'string') {
-      value = value.replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    if (typeof value === "string") {
+      value = value.replace(/</g, "&lt;").replace(/>/g, "&gt;");
     }
     return result + string + value;
-  }, '');
+  }, "");
 }
 
 const userInput = '<script>alert("hack")</script>';
@@ -3254,17 +3339,18 @@ const safeHTML = safe`Користувач ввів: ${userInput}`;
 **Практичні застосування:**
 
 **1. Конфігурація та повідомлення:**
+
 ```javascript
 const config = {
-  apiUrl: 'https://api.example.com',
-  version: 'v1',
-  apiKey: 'abc123'
+  apiUrl: "https://api.example.com",
+  version: "v1",
+  apiKey: "abc123",
 };
 
 const endpoints = {
   users: `${config.apiUrl}/${config.version}/users?key=${config.apiKey}`,
   posts: `${config.apiUrl}/${config.version}/posts?key=${config.apiKey}`,
-  auth: `${config.apiUrl}/${config.version}/auth?key=${config.apiKey}`
+  auth: `${config.apiUrl}/${config.version}/auth?key=${config.apiKey}`,
 };
 
 // Динамічні повідомлення
@@ -3272,31 +3358,33 @@ function createNotification(type, user, action) {
   const messages = {
     success: `✅ ${user.name}, ${action} виконано успішно!`,
     error: `❌ ${user.name}, помилка при ${action}`,
-    warning: `⚠️ ${user.name}, увага при ${action}`
+    warning: `⚠️ ${user.name}, увага при ${action}`,
   };
-  
+
   return messages[type] || `${user.name}: ${action}`;
 }
 ```
 
 **2. Логування та дебаг:**
+
 ```javascript
 function debugLog(level, module, message, ...data) {
   const timestamp = new Date().toISOString();
   const logEntry = `[${timestamp}] ${level.toUpperCase()} ${module}: ${message}`;
-  
+
   console.log(logEntry, ...data);
-  
+
   // Можна відправляти на сервер для збору логів
-  if (level === 'error') {
+  if (level === "error") {
     sendToLogServer(`${logEntry} ${JSON.stringify(data)}`);
   }
 }
 
-debugLog('info', 'UserService', 'User login attempt', { userId: 123, ip: '192.168.1.1' });
+debugLog("info", "UserService", "User login attempt", { userId: 123, ip: "192.168.1.1" });
 ```
 
 **3. CSS-in-JS (styled-components style):**
+
 ```javascript
 function createStyles(theme) {
   return `
@@ -3324,15 +3412,15 @@ function createStyles(theme) {
 }
 
 const lightTheme = {
-  primary: '#007bff',
-  primaryHover: '#0056b3',
-  text: '#fff',
-  border: '#007bff',
+  primary: "#007bff",
+  primaryHover: "#0056b3",
+  text: "#fff",
+  border: "#007bff",
   borderRadius: 4,
   spacing: { small: 8, medium: 16 },
   fontSize: { base: 14 },
   transition: { fast: 200 },
-  shadow: 'rgba(0,123,255,0.3)'
+  shadow: "rgba(0,123,255,0.3)",
 };
 
 const cssStyles = createStyles(lightTheme);
@@ -3343,24 +3431,26 @@ const cssStyles = createStyles(lightTheme);
 ### 🎯 **Завдання для закріплення:**
 
 1. **Деструктуризація:** Що виведе цей код?
+
    ```javascript
    const arr = [1, 2, 3, 4, 5];
    const [a, , c, ...rest] = arr;
    console.log(a, c, rest);
-   
+
    const obj = { x: 1, y: 2, z: 3 };
    const { x, ...other } = obj;
    console.log(x, other);
    ```
 
 2. **Spread практика:** Напиши функції:
+
    ```javascript
    // Функція для об'єднання об'єктів з пріоритетом
    function mergeWithPriority(defaultConfig, userConfig) {
      // userConfig має перезаписувати defaultConfig
      // твоя реалізація з spread
    }
-   
+
    // Функція для копіювання масиву без останнього елемента
    function copyWithoutLast(arr) {
      // твоя реалізація з spread
@@ -3368,13 +3458,14 @@ const cssStyles = createStyles(lightTheme);
    ```
 
 3. **Rest parameters:** Створи функцію:
+
    ```javascript
    function createLogger(prefix, ...messages) {
      // Функція має виводити: "[PREFIX] message1 message2 message3"
      // твоя реалізація
    }
-   
-   createLogger('INFO', 'User', 'logged', 'in');
+
+   createLogger("INFO", "User", "logged", "in");
    // Має вивести: "[INFO] User logged in"
    ```
 
@@ -3385,6 +3476,996 @@ const cssStyles = createStyles(lightTheme);
      // Використай template literals для створення HTML картки
      // Якщо inStock === false, додай клас 'out-of-stock'
    }
+   ```
+
+---
+
+## 🌐 Модуль 6: DOM & Events (Frontend)
+
+### 🎯 DOM Manipulation - ТОП питання
+
+#### <span style="color: #4a90e2">**Як вибрати елементи? (`querySelector`, `getElementById`)** ⭐</span>
+
+**Основні методи вибору елементів:**
+
+1. **`querySelector()`** - вибирає **перший** елемент за CSS селектором
+2. **`querySelectorAll()`** - вибирає **всі** елементи за CSS селектором  
+3. **`getElementById()`** - вибирає елемент за `id` (швидший)
+4. **`getElementsByClassName()`** - вибирає елементи за класом
+5. **`getElementsByTagName()`** - вибирає елементи за тегом
+
+```javascript
+// HTML для прикладів:
+// <div id="header" class="main-header">
+//   <h1 class="title">Заголовок</h1>
+//   <button class="btn primary">Кнопка 1</button>
+//   <button class="btn secondary">Кнопка 2</button>
+// </div>
+
+// 1. querySelector - найпопулярніший метод
+const header = document.querySelector('#header'); // по id
+const title = document.querySelector('.title'); // по класу
+const firstBtn = document.querySelector('.btn'); // перша кнопка
+const primaryBtn = document.querySelector('.btn.primary'); // по двох класах
+
+// 2. querySelectorAll - для множинного вибору
+const allBtns = document.querySelectorAll('.btn'); // NodeList з усіх кнопок
+const allDivs = document.querySelectorAll('div'); // всі div елементи
+
+// 3. getElementById - найшвидший для id
+const headerById = document.getElementById('header'); // без #
+
+// 4. Робота з результатами querySelectorAll
+allBtns.forEach(btn => {
+  btn.addEventListener('click', () => console.log('Клік!'));
+});
+
+// 5. Перевірка на існування
+const element = document.querySelector('.nonexistent');
+if (element) {
+  element.style.color = 'red';
+} else {
+  console.log('Елемент не знайдено');
+}
+```
+
+**Коли що використовувати:**
+- `querySelector()` - універсальний, зручний для CSS селекторів
+- `getElementById()` - найшвидший для пошуку по id
+- `querySelectorAll()` - коли потрібно працювати з групою елементів
+
+---
+
+#### <span style="color: #4a90e2">**Як додавати event listeners?** ⭐</span>
+
+**`addEventListener()` - сучасний спосіб:**
+
+```javascript
+// HTML: <button id="myBtn">Натисни мене</button>
+
+const button = document.querySelector('#myBtn');
+
+// 1. Базове додавання події
+button.addEventListener('click', function() {
+  console.log('Кнопку натиснуто!');
+});
+
+// 2. Arrow function (рекомендується)
+button.addEventListener('click', () => {
+  console.log('Кнопку натиснуто!');
+});
+
+// 3. Винесена функція (можна видалити пізніше)
+function handleClick() {
+  console.log('Кнопку натиснуто!');
+}
+button.addEventListener('click', handleClick);
+
+// 4. Додавання кількох слухачів
+button.addEventListener('click', () => console.log('Слухач 1'));
+button.addEventListener('click', () => console.log('Слухач 2'));
+
+// 5. Передача параметрів події
+button.addEventListener('click', (event) => {
+  console.log('Event object:', event);
+  console.log('Target element:', event.target);
+  console.log('Тип події:', event.type);
+});
+
+// 6. Options об'єкт
+button.addEventListener('click', handleClick, {
+  once: true,      // виконати тільки раз
+  passive: true,   // не буде викликати preventDefault
+  capture: true    // перехопити в фазі capturing
+});
+```
+
+**Популярні типи подій:**
+
+```javascript
+const input = document.querySelector('#myInput');
+const form = document.querySelector('#myForm');
+
+// Події миші
+button.addEventListener('click', () => {});      // клік
+button.addEventListener('mouseenter', () => {}); // наведення
+button.addEventListener('mouseleave', () => {}); // відведення
+
+// Події клавіатури
+input.addEventListener('keydown', () => {});     // натискання клавіші
+input.addEventListener('keyup', () => {});       // відпускання клавіші
+input.addEventListener('input', () => {});       // зміна значення
+
+// Події форми
+form.addEventListener('submit', () => {});       // відправка форми
+input.addEventListener('focus', () => {});       // фокус
+input.addEventListener('blur', () => {});        // втрата фокусу
+
+// Події документа
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM завантажено');
+});
+
+window.addEventListener('load', () => {
+  console.log('Сторінка повністю завантажена');
+});
+```
+
+**Видалення event listener:**
+
+```javascript
+// Щоб видалити, функція має бути іменованою
+function handleClick() {
+  console.log('Клік!');
+}
+
+button.addEventListener('click', handleClick);
+button.removeEventListener('click', handleClick); // видаляємо
+```
+
+---
+
+#### <span style="color: #4a90e2">**Що таке event delegation?** ⭐</span>
+
+**Event delegation** - техніка, коли ми додаємо один слухач на батьківський елемент замість додавання слухачів на кожен дочірній елемент.
+
+**Чому це важливо:**
+- ⚡ **Продуктивність** - менше слухачів = менше пам'яті
+- 🔄 **Динамічні елементи** - працює з елементами, доданими пізніше
+- 🧹 **Легше управляти** - один слухач замість багатьох
+
+```javascript
+// ❌ ПОГАНО - додаємо слухач на кожну кнопку
+const buttons = document.querySelectorAll('.btn');
+buttons.forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    console.log(`Натиснуто: ${e.target.textContent}`);
+  });
+});
+
+// ✅ ДОБРЕ - Event delegation
+const container = document.querySelector('#buttons-container');
+container.addEventListener('click', (e) => {
+  // Перевіряємо, чи натиснутий елемент є кнопкою
+  if (e.target.classList.contains('btn')) {
+    console.log(`Натиснуто: ${e.target.textContent}`);
+  }
+});
+```
+
+**Практичний приклад - Todo List:**
+
+```html
+<!-- HTML -->
+<div id="todo-container">
+  <ul id="todo-list">
+    <li>
+      <span>Завдання 1</span>
+      <button class="delete-btn">❌</button>
+    </li>
+    <li>
+      <span>Завдання 2</span>
+      <button class="delete-btn">❌</button>
+    </li>
+  </ul>
+  <button id="add-todo">Додати завдання</button>
+</div>
+```
+
+```javascript
+const todoContainer = document.querySelector('#todo-container');
+const todoList = document.querySelector('#todo-list');
+
+// Event delegation для всього контейнера
+todoContainer.addEventListener('click', (e) => {
+  const target = e.target;
+  
+  // Видалення завдання
+  if (target.classList.contains('delete-btn')) {
+    const todoItem = target.closest('li');
+    todoItem.remove();
+  }
+  
+  // Додавання нового завдання
+  if (target.id === 'add-todo') {
+    const newTodo = document.createElement('li');
+    newTodo.innerHTML = `
+      <span>Нове завдання</span>
+      <button class="delete-btn">❌</button>
+    `;
+    todoList.appendChild(newTodo);
+  }
+});
+```
+
+**Переваги event delegation:**
+
+1. **Працює з динамічними елементами:**
+```javascript
+// Нові кнопки автоматично будуть працювати
+function addNewButton() {
+  const newBtn = document.createElement('button');
+  newBtn.className = 'btn';
+  newBtn.textContent = 'Нова кнопка';
+  container.appendChild(newBtn); // Event delegation спрацює!
+}
+```
+
+2. **Менше пам'яті:**
+```javascript
+// Замість 1000 слухачів - всього 1
+const table = document.querySelector('#big-table');
+table.addEventListener('click', (e) => {
+  if (e.target.tagName === 'TD') {
+    console.log('Клік по комірці:', e.target.textContent);
+  }
+});
+```
+
+---
+
+### ⚡ Events - ТОП питання
+
+#### <span style="color: #4a90e2">**Що таке `preventDefault` і `stopPropagation`?** ⭐</span>
+
+**`preventDefault()`** - скасовує стандартну поведінку браузера:
+
+```javascript
+// HTML: <form id="myForm"><button type="submit">Відправити</button></form>
+
+const form = document.querySelector('#myForm');
+
+form.addEventListener('submit', (e) => {
+  e.preventDefault(); // Скасовуємо відправку форми
+  
+  // Власна логіка валідації
+  const isValid = validateForm();
+  if (isValid) {
+    console.log('Форма валідна, відправляємо через AJAX');
+    // sendFormData();
+  } else {
+    console.log('Форма містить помилки');
+  }
+});
+
+// Інші приклади preventDefault
+const link = document.querySelector('#myLink');
+link.addEventListener('click', (e) => {
+  e.preventDefault(); // Скасовуємо перехід по посиланню
+  console.log('Користувальницький обробник');
+});
+
+const contextMenu = document.addEventListener('contextmenu', (e) => {
+  e.preventDefault(); // Відключаємо контекстне меню
+});
+```
+
+**`stopPropagation()`** - зупиняє спливання події до батьківських елементів:
+
+```html
+<!-- HTML для прикладу -->
+<div id="parent" style="padding: 20px; background: blue;">
+  Батьківський div
+  <div id="child" style="padding: 20px; background: red;">
+    Дочірній div
+    <button id="button">Кнопка</button>
+  </div>
+</div>
+```
+
+```javascript
+const parent = document.querySelector('#parent');
+const child = document.querySelector('#child');
+const button = document.querySelector('#button');
+
+// Додаємо слухачі на всі елементи
+parent.addEventListener('click', () => {
+  console.log('Клік по parent');
+});
+
+child.addEventListener('click', () => {
+  console.log('Клік по child');
+});
+
+button.addEventListener('click', (e) => {
+  console.log('Клік по button');
+  e.stopPropagation(); // Зупиняємо спливання
+});
+
+// Без stopPropagation() виведе:
+// "Клік по button"
+// "Клік по child"  
+// "Клік по parent"
+
+// З stopPropagation() виведе тільки:
+// "Клік по button"
+```
+
+**`stopImmediatePropagation()`** - зупиняє всі інші слухачі на поточному елементі:
+
+```javascript
+button.addEventListener('click', (e) => {
+  console.log('Перший слухач');
+  e.stopImmediatePropagation(); // Зупиняємо інші слухачі
+});
+
+button.addEventListener('click', () => {
+  console.log('Другий слухач'); // НЕ спрацює
+});
+
+button.addEventListener('click', () => {
+  console.log('Третій слухач'); // НЕ спрацює
+});
+```
+
+**Практичний приклад - модальне вікно:**
+
+```javascript
+const modal = document.querySelector('#modal');
+const modalContent = document.querySelector('#modal-content');
+const closeBtn = document.querySelector('#close-modal');
+
+// Закриття по кліку на фон
+modal.addEventListener('click', () => {
+  closeModal();
+});
+
+// НЕ закривати при кліку на вміст модального вікна
+modalContent.addEventListener('click', (e) => {
+  e.stopPropagation(); // Зупиняємо спливання до modal
+});
+
+// Закриття по кнопці
+closeBtn.addEventListener('click', () => {
+  closeModal();
+});
+
+function closeModal() {
+  modal.style.display = 'none';
+}
+```
+
+---
+
+#### <span style="color: #4a90e2">**Event bubbling vs capturing**</span>
+
+**Фази обробки подій в DOM:**
+
+1. **Capturing (занурення)** - від document до target елемента
+2. **Target** - безпосередньо на цільовому елементі  
+3. **Bubbling (спливання)** - від target елемента до document
+
+```html
+<!-- HTML структура -->
+<div id="grandfather">
+  <div id="father">
+    <div id="child">Натисни мене</div>
+  </div>
+</div>
+```
+
+```javascript
+const grandfather = document.querySelector('#grandfather');
+const father = document.querySelector('#father');
+const child = document.querySelector('#child');
+
+// Bubbling (за замовчуванням) - знизу вгору
+grandfather.addEventListener('click', () => console.log('👴 Grandfather BUBBLE'));
+father.addEventListener('click', () => console.log('👨 Father BUBBLE'));
+child.addEventListener('click', () => console.log('👶 Child BUBBLE'));
+
+// Capturing - згори вниз (третій параметр true)
+grandfather.addEventListener('click', () => console.log('👴 Grandfather CAPTURE'), true);
+father.addEventListener('click', () => console.log('👨 Father CAPTURE'), true);
+child.addEventListener('click', () => console.log('👶 Child CAPTURE'), true);
+
+// При кліку на child виведе:
+// 👴 Grandfather CAPTURE (Capture фаза)
+// 👨 Father CAPTURE
+// 👶 Child CAPTURE
+// 👶 Child BUBBLE (Target фаза + Bubble фаза)
+// 👨 Father BUBBLE
+// 👴 Grandfather BUBBLE
+```
+
+**Практичне використання capturing:**
+
+```javascript
+// Перехоплення всіх кліків на рівні document
+document.addEventListener('click', (e) => {
+  console.log('Глобальний обробник кліків');
+  
+  // Можемо заблокувати всі клікі в певних умовах
+  if (isMaintenanceMode) {
+    e.stopPropagation();
+    e.preventDefault();
+    alert('Сайт на технічному обслуговуванні');
+  }
+}, true); // capture = true
+```
+
+**Візуалізація event flow:**
+
+```javascript
+function logEvent(phase, element) {
+  return function(e) {
+    console.log(`${phase}: ${element} (target: ${e.target.id})`);
+  }
+}
+
+// Демонстрація всіх фаз
+document.addEventListener('click', logEvent('CAPTURE', 'document'), true);
+grandfather.addEventListener('click', logEvent('CAPTURE', 'grandfather'), true);
+father.addEventListener('click', logEvent('CAPTURE', 'father'), true);
+child.addEventListener('click', logEvent('CAPTURE', 'child'), true);
+
+child.addEventListener('click', logEvent('BUBBLE', 'child'), false);
+father.addEventListener('click', logEvent('BUBBLE', 'father'), false);
+grandfather.addEventListener('click', logEvent('BUBBLE', 'grandfather'), false);
+document.addEventListener('click', logEvent('BUBBLE', 'document'), false);
+```
+
+---
+
+### 🎯 **Завдання для закріплення:**
+
+1. **DOM Selection:** Створи функцію для пошуку елементів:
+
+   ```javascript
+   function findElements() {
+     // Знайди всі кнопки з класом 'primary' всередині форми з id 'signup'
+     // Поверни масив елементів (не NodeList)
+     // твоя реалізація
+   }
+   ```
+
+2. **Event Delegation:** Реалізуй галерею зображень:
+
+   ```javascript
+   // HTML: 
+   // <div id="gallery">
+   //   <img src="img1.jpg" data-full="full1.jpg" alt="Image 1">
+   //   <img src="img2.jpg" data-full="full2.jpg" alt="Image 2">
+   // </div>
+   // <div id="modal" style="display: none;">
+   //   <img id="modal-img">
+   // </div>
+
+   function setupGallery() {
+     // При кліку на зображення - показати в модальному вікні
+     // Використай event delegation
+     // При кліку на modal - закрити його
+   }
+   ```
+
+3. **preventDefault практика:** Створи кастомну валідацію форми:
+
+   ```javascript
+   // HTML:
+   // <form id="registration">
+   //   <input type="email" id="email" required>
+   //   <input type="password" id="password" required>
+   //   <button type="submit">Зареєструватися</button>
+   // </form>
+
+   function setupFormValidation() {
+     // Заблокувати стандартну відправку
+     // Показати помилки валідації
+     // Якщо валідація пройшла - вивести "Форма відправлена"
+   }
+   ```
+
+4. **Event bubbling:** Створи систему вкладених меню:
+
+   ```javascript
+   // При кліку на пункт меню - показати підменю
+   // При кліку поза меню - закрити всі підменю
+   // Використай правильно stopPropagation
+   ```
+
+---
+
+## 📦 Модуль 7: Об'єкти (Базово)
+
+### 🏗️ Основи об'єктів
+
+#### <span style="color: #4a90e2">**Як створити об'єкт? (literal, constructor)**</span>
+
+**1. Object Literal (найпопулярніший спосіб):**
+
+```javascript
+// Створення об'єкту через літерал
+const person = {
+  name: "Максим",
+  age: 25,
+  city: "Київ",
+  isStudent: true,
+  
+  // Методи об'єкта
+  greet: function() {
+    return `Привіт, мене звати ${this.name}`;
+  },
+  
+  // ES6 скорочений синтаксис методу
+  introduce() {
+    return `Мені ${this.age} років, живу в ${this.city}`;
+  }
+};
+
+console.log(person.name); // "Максим"
+console.log(person.greet()); // "Привіт, мене звати Максим"
+```
+
+**2. Object Constructor:**
+
+```javascript
+// Створення через конструктор Object
+const person2 = new Object();
+person2.name = "Олена";
+person2.age = 30;
+person2.greet = function() {
+  return `Привіт, мене звати ${this.name}`;
+};
+
+// Або через Object.create()
+const person3 = Object.create(null); // об'єкт без прототипу
+person3.name = "Петро";
+person3.age = 28;
+```
+
+**3. Constructor Function (функція-конструктор):**
+
+```javascript
+// Функція-конструктор (старий спосіб)
+function Person(name, age, city) {
+  this.name = name;
+  this.age = age;
+  this.city = city;
+  
+  this.greet = function() {
+    return `Привіт, мене звати ${this.name}`;
+  };
+}
+
+// Створення нових екземплярів
+const person4 = new Person("Анна", 27, "Львів");
+const person5 = new Person("Іван", 32, "Одеса");
+
+console.log(person4.greet()); // "Привіт, мене звати Анна"
+```
+
+**4. ES6 Class (сучасний спосіб):**
+
+```javascript
+// ES6 клас
+class Person {
+  constructor(name, age, city) {
+    this.name = name;
+    this.age = age;
+    this.city = city;
+  }
+  
+  greet() {
+    return `Привіт, мене звати ${this.name}`;
+  }
+  
+  introduce() {
+    return `Мені ${this.age} років, живу в ${this.city}`;
+  }
+}
+
+const person6 = new Person("Марія", 24, "Харків");
+console.log(person6.introduce()); // "Мені 24 років, живу в Харків"
+```
+
+**Динамічне створення властивостей:**
+
+```javascript
+const user = {};
+
+// Додавання властивостей
+user.name = "Тарас";
+user["age"] = 29; // через квадратні дужки
+user[`is${"Student"}`] = false; // обчислювана властивість
+
+// ES6 computed property names
+const propName = "occupation";
+const user2 = {
+  name: "Ольга",
+  [propName]: "Розробник", // обчислювана властивість
+  [`is${propName.charAt(0).toUpperCase() + propName.slice(1)}`]: true
+};
+
+console.log(user2.occupation); // "Розробник"
+console.log(user2.isOccupation); // true
+```
+
+---
+
+#### <span style="color: #4a90e2">**Що таке prototype?** ⭐</span>
+
+**Prototype** - це механізм, через який об'єкти в JavaScript наслідують властивості та методи від інших об'єктів.
+
+**Основна концепція:**
+
+```javascript
+// Кожна функція має властивість prototype
+function Person(name) {
+  this.name = name;
+}
+
+// Додаємо методи до прототипу
+Person.prototype.greet = function() {
+  return `Привіт, мене звати ${this.name}`;
+};
+
+Person.prototype.species = "Homo sapiens";
+
+// Створюємо екземпляри
+const alice = new Person("Аліса");
+const bob = new Person("Боб");
+
+// Обидва об'єкти мають доступ до методу з прототипу
+console.log(alice.greet()); // "Привіт, мене звати Аліса"
+console.log(bob.greet()); // "Привіт, мене звати Боб"
+console.log(alice.species); // "Homo sapiens"
+
+// Метод знаходиться в прототипі, а не в самому об'єкті
+console.log(alice.hasOwnProperty('greet')); // false
+console.log(alice.hasOwnProperty('name')); // true
+```
+
+**Prototype Chain (ланцюжок прототипів):**
+
+```javascript
+// Кожен об'єкт має __proto__ (посилання на прототип)
+console.log(alice.__proto__ === Person.prototype); // true
+console.log(Person.prototype.__proto__ === Object.prototype); // true
+console.log(Object.prototype.__proto__); // null (кінець ланцюжка)
+
+// Пошук властивостей йде по ланцюжку
+const animal = {
+  type: "Тварина",
+  eat() {
+    console.log("Їм їжу");
+  }
+};
+
+const dog = {
+  breed: "Лабрадор"
+};
+
+// Встановлюємо прототип
+Object.setPrototypeOf(dog, animal);
+// або dog.__proto__ = animal; (не рекомендується)
+
+console.log(dog.breed); // "Лабрадор" (власна властивість)
+console.log(dog.type); // "Тварина" (з прототипу)
+dog.eat(); // "Їм їжу" (метод з прототипу)
+```
+
+**Object.create() - контрольоване наслідування:**
+
+```javascript
+// Створення об'єкта з певним прототипом
+const vehiclePrototype = {
+  start() {
+    console.log(`${this.type} запущено`);
+  },
+  stop() {
+    console.log(`${this.type} зупинено`);
+  }
+};
+
+const car = Object.create(vehiclePrototype);
+car.type = "Автомобіль";
+car.brand = "Toyota";
+
+const bike = Object.create(vehiclePrototype);
+bike.type = "Велосипед";
+bike.color = "Червоний";
+
+car.start(); // "Автомобіль запущено"
+bike.start(); // "Велосипед запущено"
+```
+
+**Перевірка прототипів:**
+
+```javascript
+// Корисні методи для роботи з прототипами
+console.log(car.isPrototypeOf); // undefined (метод не існує)
+console.log(vehiclePrototype.isPrototypeOf(car)); // true
+
+console.log(Object.getPrototypeOf(car) === vehiclePrototype); // true
+
+// Перевірка наявності властивості
+console.log(car.hasOwnProperty('type')); // true (власна властивість)
+console.log(car.hasOwnProperty('start')); // false (в прототипі)
+console.log('start' in car); // true (є доступ до властивості)
+```
+
+**ES6 Classes і prototype:**
+
+```javascript
+class Animal {
+  constructor(name) {
+    this.name = name;
+  }
+  
+  speak() {
+    console.log(`${this.name} робить звук`);
+  }
+}
+
+class Dog extends Animal {
+  speak() {
+    console.log(`${this.name} гавкає`);
+  }
+}
+
+const rex = new Dog("Рекс");
+rex.speak(); // "Рекс гавкає"
+
+// Під капотом це все ще prototype
+console.log(rex.__proto__ === Dog.prototype); // true
+console.log(Dog.prototype.__proto__ === Animal.prototype); // true
+```
+
+---
+
+#### <span style="color: #4a90e2">**Різниця між `for...in` і `for...of`**</span>
+
+**`for...in` - ітерація по ключах (властивостях) об'єкта:**
+
+```javascript
+const person = {
+  name: "Іван",
+  age: 30,
+  city: "Київ"
+};
+
+// for...in ітерує по ключах об'єкта
+console.log("=== for...in з об'єктом ===");
+for (let key in person) {
+  console.log(key); // "name", "age", "city"
+  console.log(person[key]); // "Іван", 30, "Київ"
+}
+
+// for...in також працює з масивами (але не рекомендується)
+const colors = ["червоний", "зелений", "синій"];
+console.log("=== for...in з масивом (не рекомендується) ===");
+for (let index in colors) {
+  console.log(index); // "0", "1", "2" (індекси як рядки!)
+  console.log(colors[index]); // "червоний", "зелений", "синій"
+}
+```
+
+**`for...of` - ітерація по значеннях iterable об'єктів:**
+
+```javascript
+// for...of ітерує по значеннях
+const fruits = ["яблуко", "банан", "апельсин"];
+
+console.log("=== for...of з масивом ===");
+for (let fruit of fruits) {
+  console.log(fruit); // "яблуко", "банан", "апельсин"
+}
+
+// for...of працює з рядками
+const word = "Привіт";
+console.log("=== for...of з рядком ===");
+for (let char of word) {
+  console.log(char); // "П", "р", "и", "в", "і", "т"
+}
+
+// for...of з Map
+const userRoles = new Map([
+  ["admin", "Адміністратор"],
+  ["user", "Користувач"],
+  ["guest", "Гість"]
+]);
+
+console.log("=== for...of з Map ===");
+for (let [key, value] of userRoles) {
+  console.log(`${key}: ${value}`);
+}
+
+// for...of з Set
+const uniqueNumbers = new Set([1, 2, 3, 3, 4, 4, 5]);
+console.log("=== for...of з Set ===");
+for (let number of uniqueNumbers) {
+  console.log(number); // 1, 2, 3, 4, 5
+}
+```
+
+**Основні відмінності:**
+
+```javascript
+const data = {
+  name: "Тест",
+  items: ["a", "b", "c"]
+};
+
+// ❌ for...of НЕ працює з простими об'єктами
+try {
+  for (let item of data) {
+    console.log(item);
+  }
+} catch (error) {
+  console.log("Помилка: об'єкт не є iterable"); // TypeError
+}
+
+// ✅ for...in працює з об'єктами
+for (let key in data) {
+  console.log(`${key}: ${data[key]}`);
+}
+
+// ✅ for...of працює з масивами
+for (let item of data.items) {
+  console.log(item); // "a", "b", "c"
+}
+
+// ❌ for...in з масивом може дати неочікувані результати
+data.items.customProperty = "додано пізніше";
+for (let key in data.items) {
+  console.log(key); // "0", "1", "2", "customProperty" (!!)
+}
+```
+
+**Практичні приклади використання:**
+
+```javascript
+// for...in - для об'єктів і їх властивостей
+const config = {
+  host: "localhost",
+  port: 3000,
+  ssl: false,
+  timeout: 5000
+};
+
+console.log("Конфігурація сервера:");
+for (let setting in config) {
+  console.log(`${setting}: ${config[setting]}`);
+}
+
+// for...of - для масивів і iterable структур
+const tasks = [
+  { id: 1, title: "Вивчити JS", done: false },
+  { id: 2, title: "Написати код", done: true },
+  { id: 3, title: "Тестування", done: false }
+];
+
+console.log("Незавершені завдання:");
+for (let task of tasks) {
+  if (!task.done) {
+    console.log(`- ${task.title}`);
+  }
+}
+
+// Отримання ключів і значень об'єкта для for...of
+console.log("=== Object.keys(), Object.values(), Object.entries() ===");
+
+// Ключі
+for (let key of Object.keys(config)) {
+  console.log(`Ключ: ${key}`);
+}
+
+// Значення
+for (let value of Object.values(config)) {
+  console.log(`Значення: ${value}`);
+}
+
+// Пари ключ-значення
+for (let [key, value] of Object.entries(config)) {
+  console.log(`${key} = ${value}`);
+}
+```
+
+**Коли що використовувати:**
+
+| Ситуація | Використовуй |
+|----------|-------------|
+| Ітерація по властивостях об'єкта | `for...in` |
+| Ітерація по елементах масиву | `for...of` |
+| Ітерація по символах рядка | `for...of` |
+| Робота з Map, Set | `for...of` |
+| Потрібні індекси масиву | `for...in` або `forEach` з індексом |
+
+---
+
+### 🎯 **Завдання для закріплення:**
+
+1. **Створення об'єктів:** Створи об'єкт різними способами:
+
+   ```javascript
+   // Створи об'єкт "product" з властивостями:
+   // name, price, category, inStock
+   // Додай метод getInfo(), який повертає рядок з інформацією про товар
+   
+   // 1. Через object literal
+   const product1 = { /* твоя реалізація */ };
+   
+   // 2. Через конструктор
+   function Product(name, price, category, inStock) {
+     // твоя реалізація
+   }
+   
+   // 3. Через ES6 клас
+   class ProductClass {
+     // твоя реалізація
+   }
+   ```
+
+2. **Prototype практика:** Розшир функціонал:
+
+   ```javascript
+   function Car(brand, model) {
+     this.brand = brand;
+     this.model = model;
+   }
+   
+   // Додай до прототипу методи:
+   // - start(): виводить "Автомобіль запущено"
+   // - getFullName(): повертає "brand model"
+   // - Властивість wheels зі значенням 4
+   
+   const myCar = new Car("Toyota", "Corolla");
+   // Має працювати: myCar.start(), myCar.getFullName(), myCar.wheels
+   ```
+
+3. **for...in vs for...of:** Що виведе цей код?
+
+   ```javascript
+   const data = {
+     name: "Тест",
+     values: [10, 20, 30]
+   };
+   
+   data.values.customProp = "додано";
+   
+   console.log("=== for...in ===");
+   for (let key in data.values) {
+     console.log(key, data.values[key]);
+   }
+   
+   console.log("=== for...of ===");
+   for (let value of data.values) {
+     console.log(value);
+   }
+   ```
+
+4. **Об'єкти в практиці:** Створи систему управління користувачами:
+
+   ```javascript
+   // Створи об'єкт UserManager з методами:
+   // - addUser(name, email): додає користувача
+   // - removeUser(email): видаляє користувача  
+   // - findUser(email): знаходить користувача
+   // - getAllUsers(): повертає всіх користувачів
+   // - getUserCount(): повертає кількість користувачів
+   
+   // Використовуй for...in для ітерації по властивостях
+   // Використовуй for...of для ітерації по масивах
    ```
 
 ---
