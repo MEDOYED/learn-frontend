@@ -1,4 +1,4 @@
-import SectionObjects from "../../widgets/SectionObjects/ui/SectionObjects/SectionObjects";
+import SectionObjects from "../../widgets/sections/SectionObjects/ui/SectionObjects/SectionCounter";
 
 const PageHome = () => {
   return (
