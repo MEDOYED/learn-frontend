@@ -1,31 +1,45 @@
+// перевірити чи рядок валідний, чи не валідний
+// що це означає:
+// оце валідний рядок: {()}
+// оце НЕ валідний рядок: ((]}
+// тобто всі дужки мають мати відкриваючу та закриваючу дужку.
+
 const string = "{()[()]}[{}]";
 
 const stringArr = string.split("");
 
 let newStringArr = [...stringArr];
-let newNewStringArr;
-let findSymbol;
 
-for (let i = 0; i < newStringArr.length; i++) {
-  // for (i of newStringArr) {
-  if (newStringArr[i] === "{") {
-    findSymbol = newStringArr.find((elem, index, array) => {
-      return elem === "}";
+for (let char of stringArr) {
+  if (!newStringArr.includes(char)) {
+    continue;
+  }
 
-      // return findSymbol.indexOf(elem);
-    });
+  let findSymbol;
 
-    // console.log(findSymbol);
-    // newNewStringArr = newStringArr.slice(newStringArr.indexOf(findSymbol));
+  if (char === "{") {
+    findSymbol = newStringArr.find((elem) => elem === "}");
+  }
+
+  if (char === "(") {
+    findSymbol = newStringArr.find((elem) => elem === ")");
+  }
+
+  if (char === "[") {
+    findSymbol = newStringArr.find((elem) => elem === "]");
   }
   // }
+
+  // видалення пари
+  if (findSymbol && newStringArr.includes(char)) {
+    // видалення закриваючої дужки
+    let closeIndex = newStringArr.indexOf(findSymbol);
+    newStringArr.splice(closeIndex, 1);
+
+    // видалення відкриваючої дужки
+    let opendIndex = newStringArr.indexOf(char);
+    newStringArr.splice(opendIndex, 1);
+  }
 }
-newStringArr.splice(7, 1).splice(0, 1);
-// newNewStringArr.splice(0, 1);
-
-console.log(newStringArr.indexOf(findSymbol));
-
-console.log(findSymbol);
 
 console.log(newStringArr);
-// console.log(newNewStringArr);
