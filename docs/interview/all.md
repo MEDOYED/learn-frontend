@@ -2585,88 +2585,2025 @@
 
 ### Базові концепції
 
-- Що таке React і навіщо він потрібен?
-- Що таке компоненти в React?
-- В чому різниця між функціональними та класовими компонентами?
-- Що таке JSX?
-- Що таке Virtual DOM?
+- **Що таке React і навіщо він потрібен?**
+  
+  React - JavaScript бібліотека для створення користувальських інтерфейсів, розроблена Facebook.
+  
+  Навіщо потрібен:
+  - Компонентний підхід - код можна розділити на багаторазові компоненти
+  - Virtual DOM - оптимізує оновлення інтерфейсу
+  - Однонаправлений потік даних - легше відслідковувати стан додатку
+  - Велика екосистема і спільнота розробників
+
+- **Що таке компоненти в React?**
+  
+  Компоненти - це незалежні частини інтерфейсу, які мають свою логіку і можуть повторно використовуватися.
+  
+  ```jsx
+  // Функціональний компонент
+  function Welcome(props) {
+    return <h1>Привіт, {props.name}!</h1>;
+  }
+  
+  // Використання
+  <Welcome name="Максим" />
+  ```
+
+- **В чому різниця між функціональними та класовими компонентами?**
+  
+  ```jsx
+  // Функціональний компонент
+  function MyComponent(props) {
+    return <div>{props.title}</div>;
+  }
+  
+  // Класовий компонент
+  class MyComponent extends React.Component {
+    render() {
+      return <div>{this.props.title}</div>;
+    }
+  }
+  ```
+  
+  Відмінності:
+  - Функціональні - простіші, використовують hooks для стану
+  - Класові - більш багатослівні, мають методи життєвого циклу
+  - Функціональні компоненти - сучасний підхід
+
+- **Що таке JSX?**
+  
+  JSX - синтаксичне розширення JavaScript, яке дозволяє писати HTML-подібний код в JavaScript.
+  
+  ```jsx
+  // JSX
+  const element = <h1>Привіт світ!</h1>;
+  
+  // Компілюється в
+  const element = React.createElement('h1', null, 'Привіт світ!');
+  ```
+  
+  Особливості:
+  - Використовуємо camelCase для атрибутів (className замість class)
+  - Можна вставляти JavaScript вирази в {}
+  - Потрібен один батьківський елемент
+
+- **Що таке Virtual DOM?**
+  
+  Virtual DOM - це JavaScript представлення реального DOM, яке зберігається в пам'яті.
+  
+  Як працює:
+  1. React створює Virtual DOM представлення компонентів
+  2. При зміні стану створюється новий Virtual DOM
+  3. React порівнює (diff) старий і новий Virtual DOM
+  4. Оновлюється тільки те, що змінилося в реальному DOM
+  
+  Переваги:
+  - Швидші оновлення інтерфейсу
+  - Батчинг оновлень
+  - Передбачуваність
 
 ### Props та State
 
-- Що таке props і як їх передавати?
-- Що таке state і як з ним працювати?
-- В чому різниця між props та state?
-- Що таке prop drilling?
-- Як передати дані від дочірнього до батьківського компонента?
+- **Що таке props і як їх передавати?**
+  
+  Props (properties) - це дані, які передаються від батьківського компонента до дочірнього.
+  
+  ```jsx
+  // Передача props
+  function App() {
+    return <UserCard name="Максим" age={25} isActive={true} />;
+  }
+  
+  // Отримання props
+  function UserCard({ name, age, isActive }) {
+    return (
+      <div>
+        <h2>{name}</h2>
+        <p>Вік: {age}</p>
+        <p>Статус: {isActive ? 'Активний' : 'Неактивний'}</p>
+      </div>
+    );
+  }
+  ```
+
+- **Що таке state і як з ним працювати?**
+  
+  State - внутрішній стан компонента, який може змінюватися.
+  
+  ```jsx
+  import { useState } from 'react';
+  
+  function Counter() {
+    const [count, setCount] = useState(0);
+  
+    return (
+      <div>
+        <p>Лічильник: {count}</p>
+        <button onClick={() => setCount(count + 1)}>
+          Збільшити
+        </button>
+      </div>
+    );
+  }
+  ```
+
+- **В чому різниця між props та state?**
+  
+  | Props | State |
+  |-------|--------|
+  | Передаються ззовні | Внутрішній стан компонента |
+  | Незмінні (immutable) | Можна змінювати |
+  | Контролюються батьківським компонентом | Контролюються самим компонентом |
+  | Функціональні аргументи | Локальні змінні компонента |
+
+- **Що таке prop drilling?**
+  
+  Prop drilling - передача даних через багато рівнів компонентів, навіть якщо проміжні компоненти їх не використовують.
+  
+  ```jsx
+  // Проблема prop drilling
+  function App() {
+    const user = { name: 'Максим' };
+    return <Header user={user} />;
+  }
+  
+  function Header({ user }) {
+    return <Navigation user={user} />; // Просто передає далі
+  }
+  
+  function Navigation({ user }) {
+    return <UserInfo user={user} />; // Просто передає далі
+  }
+  
+  function UserInfo({ user }) {
+    return <span>{user.name}</span>; // Нарешті використовує
+  }
+  ```
+  
+  Рішення: Context API, Redux, Zustand
+
+- **Як передати дані від дочірнього до батьківського компонента?**
+  
+  Через callback функції, які передаються як props.
+  
+  ```jsx
+  // Батьківський компонент
+  function Parent() {
+    const [message, setMessage] = useState('');
+  
+    const handleChildData = (data) => {
+      setMessage(data);
+    };
+  
+    return (
+      <div>
+        <p>Повідомлення: {message}</p>
+        <Child onSendData={handleChildData} />
+      </div>
+    );
+  }
+  
+  // Дочірній компонент
+  function Child({ onSendData }) {
+    const sendData = () => {
+      onSendData('Привіт від дочірнього!');
+    };
+  
+    return <button onClick={sendData}>Відправити дані</button>;
+  }
+  ```
 
 ### Hooks
 
-- Що таке React Hooks?
-- Як працює `useState`?
-- Як працює `useEffect`?
-- Що таке `useContext`?
-- Які правила використання хуків?
+- **Що таке React Hooks?**
+  
+  Hooks - це функції, які дозволяють використовувати стан і інші React функціональності у функціональних компонентах.
+  
+  Переваги:
+  - Простіший код ніж класові компоненти
+  - Легше повторне використання логіки
+  - Менше помилок з контекстом (this)
+  - Кращий tree shaking
+
+- **Як працює `useState`?**
+  
+  `useState` - хук для управління локальним станом компонента.
+  
+  ```jsx
+  import { useState } from 'react';
+  
+  function Example() {
+    const [count, setCount] = useState(0); // початкове значення
+    const [user, setUser] = useState({ name: '', email: '' });
+  
+    const increment = () => setCount(count + 1);
+    const updateUser = () => setUser({ name: 'Максим', email: 'max@example.com' });
+  
+    return (
+      <div>
+        <p>Count: {count}</p>
+        <button onClick={increment}>+</button>
+        <p>User: {user.name}</p>
+      </div>
+    );
+  }
+  ```
+
+- **Як працює `useEffect`?**
+  
+  `useEffect` - хук для виконання побічних ефектів (API запити, підписки, DOM маніпуляції).
+  
+  ```jsx
+  import { useState, useEffect } from 'react';
+  
+  function UserProfile({ userId }) {
+    const [user, setUser] = useState(null);
+  
+    // Викликається після кожного рендеру
+    useEffect(() => {
+      fetchUser(userId).then(setUser);
+    }, [userId]); // залежності
+  
+    // Ефект з очищенням
+    useEffect(() => {
+      const timer = setInterval(() => {
+        console.log('Timer tick');
+      }, 1000);
+  
+      return () => clearInterval(timer); // очищення
+    }, []);
+  
+    return user ? <div>{user.name}</div> : <div>Loading...</div>;
+  }
+  ```
+
+- **Що таке `useContext`?**
+  
+  `useContext` - хук для використання React Context без Consumer компонента.
+  
+  ```jsx
+  import { createContext, useContext } from 'react';
+  
+  const ThemeContext = createContext();
+  
+  function App() {
+    return (
+      <ThemeContext.Provider value="dark">
+        <Header />
+      </ThemeContext.Provider>
+    );
+  }
+  
+  function Header() {
+    const theme = useContext(ThemeContext);
+    return <div className={`header ${theme}`}>Header</div>;
+  }
+  ```
+
+- **Які правила використання хуків?**
+  
+  1. **Викликайте хуки тільки на верхньому рівні**
+     ```jsx
+     // ❌ Неправильно
+     function BadComponent() {
+       if (condition) {
+         useState(0); // В умові
+       }
+       return <div />;
+     }
+     
+     // ✅ Правильно
+     function GoodComponent() {
+       const [count, setCount] = useState(0);
+       if (condition) {
+         // логіка тут
+       }
+       return <div />;
+     }
+     ```
+  
+  2. **Викликайте хуки тільки з React функцій**
+     ```jsx
+     // ✅ З компонентів
+     function MyComponent() {
+       const [state, setState] = useState();
+     }
+     
+     // ✅ З custom hooks
+     function useMyHook() {
+       const [state, setState] = useState();
+     }
+     ```
 
 ### Життєвий цикл
 
-- Які фази життєвого циклу компонента?
-- Коли викликається `useEffect`?
-- Як очистити ефект в `useEffect`?
-- Що таке dependency array?
+- **Які фази життєвого циклу компонента?**
+  
+  У React є три основні фази життєвого циклу:
+  
+  1. **Mounting (Монтування)** - компонент створюється і вставляється в DOM
+  2. **Updating (Оновлення)** - компонент оновлюється при зміні props або state
+  3. **Unmounting (Розмонтування)** - компонент видаляється з DOM
+  
+  ```jsx
+  // У функціональних компонентах з useEffect
+  function MyComponent() {
+    useEffect(() => {
+      // Mounting - викликається один раз
+      console.log('Component mounted');
+      
+      return () => {
+        // Unmounting - викликається при видаленні
+        console.log('Component will unmount');
+      };
+    }, []);
+  
+    useEffect(() => {
+      // Updating - викликається при кожному оновленні
+      console.log('Component updated');
+    });
+  }
+  ```
+
+- **Коли викликається `useEffect`?**
+  
+  `useEffect` викликається в різний час залежно від масиву залежностей:
+  
+  ```jsx
+  // 1. Після кожного рендеру (без залежностей)
+  useEffect(() => {
+    console.log('Після кожного рендеру');
+  });
+  
+  // 2. Тільки один раз після монтування (порожній масив)
+  useEffect(() => {
+    console.log('Тільки після монтування');
+  }, []);
+  
+  // 3. При зміні конкретних значень
+  useEffect(() => {
+    console.log('При зміні count або name');
+  }, [count, name]);
+  ```
+
+- **Як очистити ефект в `useEffect`?**
+  
+  Повертаємо cleanup функцію з useEffect:
+  
+  ```jsx
+  useEffect(() => {
+    // Підписка на події
+    const handleScroll = () => console.log('Scrolled');
+    window.addEventListener('scroll', handleScroll);
+    
+    // Таймер
+    const timer = setInterval(() => {
+      console.log('Timer tick');
+    }, 1000);
+    
+    // Cleanup функція
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      clearInterval(timer);
+      console.log('Effect cleaned up');
+    };
+  }, []);
+  ```
+
+- **Що таке dependency array?**
+  
+  Dependency array (масив залежностей) - другий аргумент useEffect, який контролює коли ефект повинен виконуватися.
+  
+  ```jsx
+  const [count, setCount] = useState(0);
+  const [name, setName] = useState('');
+  
+  // Без dependency array - викликається після кожного рендеру
+  useEffect(() => {
+    document.title = `Count: ${count}, Name: ${name}`;
+  });
+  
+  // Порожній array - викликається один раз
+  useEffect(() => {
+    fetchInitialData();
+  }, []);
+  
+  // З залежностями - викликається при зміні count
+  useEffect(() => {
+    if (count > 0) {
+      localStorage.setItem('count', count.toString());
+    }
+  }, [count]);
+  
+  // Multiple dependencies
+  useEffect(() => {
+    updateUserProfile(count, name);
+  }, [count, name]);
+  ```
+  
+  Важливо включати всі змінні з компонента, які використовуються в ефекті.
 
 ### Події та форми
 
-- Як обробляти події в React?
-- Що таке SyntheticEvent?
-- Як працювати з формами в React?
-- Що таке контрольовані та неконтрольовані компоненти?
+- **Як обробляти події в React?**
+  
+  Події в React обробляються через event handlers, які передаються як props:
+  
+  ```jsx
+  function Button() {
+    const handleClick = (event) => {
+      event.preventDefault();
+      console.log('Button clicked!');
+      console.log('Event type:', event.type);
+    };
+  
+    const handleMouseEnter = () => {
+      console.log('Mouse entered!');
+    };
+  
+    return (
+      <button 
+        onClick={handleClick}
+        onMouseEnter={handleMouseEnter}
+      >
+        Click me
+      </button>
+    );
+  }
+  ```
+  
+  Особливості:
+  - Використовуємо camelCase (onClick, onMouseEnter)
+  - Event handlers отримують SyntheticEvent
+  - Можна передавати додаткові параметри
+
+- **Що таке SyntheticEvent?**
+  
+  SyntheticEvent - це React обгортка над нативними подіями браузера для забезпечення кросбраузерної сумісності.
+  
+  ```jsx
+  function Input() {
+    const handleChange = (syntheticEvent) => {
+      // SyntheticEvent властивості
+      console.log('Type:', syntheticEvent.type);
+      console.log('Target:', syntheticEvent.target.value);
+      console.log('Current target:', syntheticEvent.currentTarget);
+      
+      // Доступ до нативної події
+      const nativeEvent = syntheticEvent.nativeEvent;
+      console.log('Native event:', nativeEvent);
+      
+      // Методи
+      syntheticEvent.preventDefault();
+      syntheticEvent.stopPropagation();
+    };
+  
+    return <input onChange={handleChange} />;
+  }
+  ```
+  
+  Переваги:
+  - Однакова поведінка в різних браузерах
+  - Автоматичне управління пам'яттю
+  - Додаткові методи і властивості
+
+- **Як працювати з формами в React?**
+  
+  ```jsx
+  function ContactForm() {
+    const [formData, setFormData] = useState({
+      name: '',
+      email: '',
+      message: ''
+    });
+  
+    const handleChange = (e) => {
+      const { name, value } = e.target;
+      setFormData(prev => ({
+        ...prev,
+        [name]: value
+      }));
+    };
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      console.log('Form submitted:', formData);
+      // Відправка даних на сервер
+      submitForm(formData);
+    };
+  
+    return (
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Ім'я"
+        />
+        <input
+          type="email"
+          name="email"
+          value={formData.email}
+          onChange={handleChange}
+          placeholder="Email"
+        />
+        <textarea
+          name="message"
+          value={formData.message}
+          onChange={handleChange}
+          placeholder="Повідомлення"
+        />
+        <button type="submit">Відправити</button>
+      </form>
+    );
+  }
+  ```
+
+- **Що таке контрольовані та неконтрольовані компоненти?**
+  
+  **Контрольовані компоненти** - React контролює значення через state:
+  
+  ```jsx
+  function ControlledInput() {
+    const [value, setValue] = useState('');
+  
+    return (
+      <input
+        type="text"
+        value={value} // значення контролюється React
+        onChange={(e) => setValue(e.target.value)}
+      />
+    );
+  }
+  ```
+  
+  **Неконтрольовані компоненти** - DOM контролює значення, React отримує через ref:
+  
+  ```jsx
+  function UncontrolledInput() {
+    const inputRef = useRef();
+  
+    const handleSubmit = () => {
+      console.log('Value:', inputRef.current.value);
+    };
+  
+    return (
+      <div>
+        <input
+          type="text"
+          ref={inputRef}
+          defaultValue="Початкове значення"
+        />
+        <button onClick={handleSubmit}>Get Value</button>
+      </div>
+    );
+  }
+  ```
+  
+  **Коли використовувати:**
+  - Контрольовані: коли потрібна валідація, форматування, умовна логіка
+  - Неконтрольовані: для простих форм, інтеграції з non-React кодом
 
 ### Рендеринг та оптимізація
 
-- Коли React перерендерює компонент?
-- Що таке `React.memo`?
-- Що таке `useMemo` та `useCallback`?
-- Як оптимізувати продуктивність React додатку?
+- **Коли React перерендерює компонент?**
+  
+  React перерендерює компонент в таких випадках:
+  
+  1. **Зміна state:** компонент перерендерюється при зміні власного стану
+  2. **Зміна props:** коли батьківський компонент передає нові props
+  3. **Батьківський рендер:** якщо батьківський компонент рендериться, дочірні теж
+  4. **Context зміни:** при оновленні значення в Context Provider
+  
+  ```jsx
+  function Parent() {
+    const [count, setCount] = useState(0);
+    
+    return (
+      <div>
+        <Child name="test" /> {/* Перерендериться при зміні count */}
+        <button onClick={() => setCount(count + 1)}>
+          Count: {count}
+        </button>
+      </div>
+    );
+  }
+  ```
+
+- **Що таке `React.memo`?**
+  
+  `React.memo` - це Higher-Order Component для оптимізації функціональних компонентів. Він запобігає перерендеру, якщо props не змінилися.
+  
+  ```jsx
+  // Без оптимізації
+  function ExpensiveComponent({ name, data }) {
+    console.log('ExpensiveComponent rendered');
+    return <div>{name}: {data.length}</div>;
+  }
+  
+  // З React.memo
+  const OptimizedComponent = React.memo(function ExpensiveComponent({ name, data }) {
+    console.log('OptimizedComponent rendered');
+    return <div>{name}: {data.length}</div>;
+  });
+  
+  // З custom comparison
+  const CustomMemoComponent = React.memo(ExpensiveComponent, (prevProps, nextProps) => {
+    return prevProps.name === nextProps.name && 
+           prevProps.data.length === nextProps.data.length;
+  });
+  ```
+
+- **Що таке `useMemo` та `useCallback`?**
+  
+  **`useMemo`** - мемоізує результат обчислення:
+  
+  ```jsx
+  function ExpensiveList({ items, filter }) {
+    // Без оптимізації - обчислюється при кожному рендері
+    const filteredItems = items.filter(item => item.includes(filter));
+    
+    // З useMemo - обчислюється тільки при зміні залежностей
+    const memoizedFilteredItems = useMemo(() => {
+      console.log('Filtering items...');
+      return items.filter(item => item.includes(filter));
+    }, [items, filter]);
+  
+    return (
+      <ul>
+        {memoizedFilteredItems.map(item => <li key={item}>{item}</li>)}
+      </ul>
+    );
+  }
+  ```
+  
+  **`useCallback`** - мемоізує функцію:
+  
+  ```jsx
+  function Parent({ items }) {
+    const [count, setCount] = useState(0);
+  
+    // Без useCallback - нова функція при кожному рендері
+    const handleClick = (id) => {
+      console.log('Clicked item:', id);
+    };
+  
+    // З useCallback - та ж функція, якщо залежності не змінилися
+    const memoizedHandleClick = useCallback((id) => {
+      console.log('Clicked item:', id);
+    }, []); // порожні залежності
+  
+    return (
+      <div>
+        <button onClick={() => setCount(count + 1)}>Count: {count}</button>
+        {items.map(item => (
+          <MemoizedChild 
+            key={item.id}
+            item={item}
+            onClick={memoizedHandleClick}
+          />
+        ))}
+      </div>
+    );
+  }
+  ```
+
+- **Як оптимізувати продуктивність React додатку?**
+  
+  1. **Використовуйте React.memo для компонентів:**
+     ```jsx
+     const MyComponent = React.memo(({ data }) => {
+       return <div>{data.name}</div>;
+     });
+     ```
+  
+  2. **useMemo для важких обчислень:**
+     ```jsx
+     const expensiveValue = useMemo(() => {
+       return heavyCalculation(props.data);
+     }, [props.data]);
+     ```
+  
+  3. **useCallback для event handlers:**
+     ```jsx
+     const handleClick = useCallback(() => {
+       onClick(item.id);
+     }, [onClick, item.id]);
+     ```
+  
+  4. **Правильно структуруйте state:**
+     ```jsx
+     // ❌ Погано - змінює весь об'єкт
+     const [state, setState] = useState({ user: {}, posts: [] });
+     
+     // ✅ Добре - роздільний state
+     const [user, setUser] = useState({});
+     const [posts, setPosts] = useState([]);
+     ```
+  
+  5. **Використовуйте React.lazy і Suspense:**
+     ```jsx
+     const LazyComponent = React.lazy(() => import('./LazyComponent'));
+     
+     function App() {
+       return (
+         <Suspense fallback={<div>Loading...</div>}>
+           <LazyComponent />
+         </Suspense>
+       );
+     }
+     ```
+  
+  6. **Віртуалізація для довгих списків:**
+     ```jsx
+     import { FixedSizeList } from 'react-window';
+     
+     function VirtualizedList({ items }) {
+       return (
+         <FixedSizeList
+           height={600}
+           itemCount={items.length}
+           itemSize={50}
+         >
+           {({ index, style }) => (
+             <div style={style}>{items[index].name}</div>
+           )}
+         </FixedSizeList>
+       );
+     }
+     ```
 
 ## Redux питання
 
 ### Базові концепції
 
-- Що таке Redux і навіщо він потрібен?
-- Що таке store, action, reducer?
-- Який принцип роботи Redux?
-- Що таке однонаправлений потік даних?
+- **Що таке Redux і навіщо він потрібен?**
+  
+  Redux - це бібліотека для управління станом додатку. Вона реалізує архітектуру Flux і забезпечує передбачуване управління станом.
+  
+  Навіщо потрібен Redux:
+  - Централізоване управління станом додатку
+  - Передбачувані оновлення стану
+  - Легше дебажити (Redux DevTools)
+  - Time travel debugging
+  - Server-side rendering підтримка
+  - Легше тестувати логіку
+  
+  ```jsx
+  // Без Redux - prop drilling проблема
+  function App() {
+    const [user, setUser] = useState(null);
+    return <Header user={user} setUser={setUser} />;
+  }
+  
+  // З Redux - доступ з будь-якого компонента
+  const user = useSelector(state => state.user);
+  const dispatch = useDispatch();
+  ```
+
+- **Що таке store, action, reducer?**
+  
+  **Store** - централізоване сховище стану додатку:
+  ```javascript
+  import { createStore } from 'redux';
+  
+  const store = createStore(rootReducer);
+  
+  // Методи store
+  store.getState(); // отримати поточний стан
+  store.dispatch(action); // відправити дію
+  store.subscribe(listener); // підписатися на зміни
+  ```
+  
+  **Action** - об'єкт, який описує що сталося:
+  ```javascript
+  // Action object
+  const addTodo = {
+    type: 'ADD_TODO',
+    payload: {
+      id: 1,
+      text: 'Вивчити Redux',
+      completed: false
+    }
+  };
+  
+  // Action creator
+  const addTodo = (text) => ({
+    type: 'ADD_TODO',
+    payload: {
+      id: Date.now(),
+      text,
+      completed: false
+    }
+  });
+  ```
+  
+  **Reducer** - чиста функція, яка визначає як стан змінюється у відповідь на action:
+  ```javascript
+  const todosReducer = (state = [], action) => {
+    switch (action.type) {
+      case 'ADD_TODO':
+        return [...state, action.payload];
+      case 'TOGGLE_TODO':
+        return state.map(todo =>
+          todo.id === action.payload.id
+            ? { ...todo, completed: !todo.completed }
+            : todo
+        );
+      case 'DELETE_TODO':
+        return state.filter(todo => todo.id !== action.payload.id);
+      default:
+        return state;
+    }
+  };
+  ```
+
+- **Який принцип роботи Redux?**
+  
+  Redux працює за принципом однонаправленого потоку даних:
+  
+  ```
+  UI Component → Action → Reducer → Store → UI Component
+  ```
+  
+  1. **Компонент відправляє Action:** `dispatch(addTodo('New task'))`
+  2. **Store передає Action і поточний state в Reducer**
+  3. **Reducer повертає новий state** на основі action
+  4. **Store зберігає новий state** і повідомляє підписників
+  5. **UI оновлюється** з новим state
+  
+  ```jsx
+  function TodoApp() {
+    const todos = useSelector(state => state.todos);
+    const dispatch = useDispatch();
+  
+    const handleAddTodo = (text) => {
+      dispatch(addTodo(text)); // 1. Відправляємо action
+    };
+  
+    return (
+      <div>
+        {todos.map(todo => ( // 5. UI оновлюється
+          <div key={todo.id}>{todo.text}</div>
+        ))}
+        <AddTodoForm onAdd={handleAddTodo} />
+      </div>
+    );
+  }
+  ```
+
+- **Що таке однонаправлений потік даних?**
+  
+  Однонаправлений потік даних (Unidirectional Data Flow) - це архітектурний принцип, де дані рухаються тільки в одному напрямку.
+  
+  **Переваги:**
+  - Легше розуміти як працює додаток
+  - Менше помилок через передбачуваність
+  - Легше дебажити
+  - Кращий контроль над станом
+  
+  ```jsx
+  // Однонаправлений потік в Redux
+  const Counter = () => {
+    const count = useSelector(state => state.count); // Читаємо state
+    const dispatch = useDispatch();
+  
+    const increment = () => {
+      dispatch({ type: 'INCREMENT' }); // Відправляємо action
+    };
+  
+    return (
+      <div>
+        <span>{count}</span>
+        <button onClick={increment}>+</button>
+      </div>
+    );
+  };
+  
+  // Reducer обробляє action і повертає новий state
+  const counterReducer = (state = { count: 0 }, action) => {
+    switch (action.type) {
+      case 'INCREMENT':
+        return { count: state.count + 1 };
+      default:
+        return state;
+    }
+  };
+  ```
+  
+  **Порівняння з двонаправленим потоком:**
+  ```jsx
+  // ❌ Двонаправлений (Angular) - складніше відслідкувати
+  // Model ↔ View (зміни можуть йти в обох напрямках)
+  
+  // ✅ Однонаправлений (Redux) - передбачувано
+  // Action → Reducer → Store → View → Action
+  ```
 
 ### Практичне використання
 
-- Як підключити Redux до React?
-- Що таке `useSelector` та `useDispatch`?
-- Як обробляти асинхронні дії в Redux?
-- Що таке middleware в Redux?
+- **Як підключити Redux до React?**
+  
+  Для підключення Redux до React використовуємо React-Redux:
+  
+  ```jsx
+  // 1. Встановлення
+  npm install redux react-redux @reduxjs/toolkit
+  
+  // 2. Створення store
+  import { configureStore } from '@reduxjs/toolkit';
+  import counterReducer from './counterSlice';
+  
+  const store = configureStore({
+    reducer: {
+      counter: counterReducer,
+      todos: todosReducer
+    }
+  });
+  
+  // 3. Підключення до React app
+  import { Provider } from 'react-redux';
+  
+  function App() {
+    return (
+      <Provider store={store}>
+        <div className="App">
+          <Counter />
+          <TodoList />
+        </div>
+      </Provider>
+    );
+  }
+  
+  export default App;
+  
+  // 4. Використання в компонентах
+  import { useSelector, useDispatch } from 'react-redux';
+  
+  function Counter() {
+    const count = useSelector(state => state.counter.value);
+    const dispatch = useDispatch();
+  
+    return (
+      <div>
+        <span>{count}</span>
+        <button onClick={() => dispatch(increment())}>+</button>
+      </div>
+    );
+  }
+  ```
+
+- **Що таке `useSelector` та `useDispatch`?**
+  
+  **`useSelector`** - хук для читання даних зі store:
+  
+  ```jsx
+  import { useSelector } from 'react-redux';
+  
+  function MyComponent() {
+    // Читаємо конкретну частину state
+    const user = useSelector(state => state.user);
+    const todos = useSelector(state => state.todos);
+    
+    // Можна використовувати з обчисленнями
+    const completedTodos = useSelector(state => 
+      state.todos.filter(todo => todo.completed)
+    );
+    
+    // З функцією порівняння для оптимізації
+    const userInfo = useSelector(
+      state => ({ name: state.user.name, email: state.user.email }),
+      (left, right) => left.name === right.name && left.email === right.email
+    );
+  
+    return <div>{user.name}</div>;
+  }
+  ```
+  
+  **`useDispatch`** - хук для відправки actions:
+  
+  ```jsx
+  import { useDispatch } from 'react-redux';
+  import { addTodo, deleteTodo } from './todosSlice';
+  
+  function TodoForm() {
+    const dispatch = useDispatch();
+    const [text, setText] = useState('');
+  
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      // Відправляємо action
+      dispatch(addTodo({
+        id: Date.now(),
+        text,
+        completed: false
+      }));
+      setText('');
+    };
+  
+    const handleDelete = (id) => {
+      dispatch(deleteTodo(id));
+    };
+  
+    return (
+      <form onSubmit={handleSubmit}>
+        <input
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+        />
+        <button type="submit">Add Todo</button>
+      </form>
+    );
+  }
+  ```
+
+- **Як обробляти асинхронні дії в Redux?**
+  
+  Для асинхронних дій використовуємо **Redux Toolkit's createAsyncThunk** або **Redux Thunk**:
+  
+  ```jsx
+  // З Redux Toolkit createAsyncThunk
+  import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+  
+  // Async thunk для API запиту
+  export const fetchUserById = createAsyncThunk(
+    'users/fetchById',
+    async (userId, { rejectWithValue }) => {
+      try {
+        const response = await fetch(`/api/users/${userId}`);
+        if (!response.ok) {
+          throw new Error('Failed to fetch user');
+        }
+        return response.json();
+      } catch (error) {
+        return rejectWithValue(error.message);
+      }
+    }
+  );
+  
+  const usersSlice = createSlice({
+    name: 'users',
+    initialState: {
+      user: null,
+      loading: false,
+      error: null
+    },
+    reducers: {},
+    extraReducers: (builder) => {
+      builder
+        .addCase(fetchUserById.pending, (state) => {
+          state.loading = true;
+          state.error = null;
+        })
+        .addCase(fetchUserById.fulfilled, (state, action) => {
+          state.loading = false;
+          state.user = action.payload;
+        })
+        .addCase(fetchUserById.rejected, (state, action) => {
+          state.loading = false;
+          state.error = action.payload;
+        });
+    }
+  });
+  
+  // Використання в компоненті
+  function UserProfile({ userId }) {
+    const { user, loading, error } = useSelector(state => state.users);
+    const dispatch = useDispatch();
+  
+    useEffect(() => {
+      dispatch(fetchUserById(userId));
+    }, [dispatch, userId]);
+  
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error}</div>;
+  
+    return user ? <div>Hello, {user.name}!</div> : null;
+  }
+  ```
+  
+  **З Redux Thunk (старіший підхід):**
+  
+  ```jsx
+  // Thunk action creator
+  const fetchUser = (userId) => {
+    return async (dispatch, getState) => {
+      dispatch({ type: 'FETCH_USER_START' });
+      
+      try {
+        const response = await fetch(`/api/users/${userId}`);
+        const user = await response.json();
+        dispatch({ type: 'FETCH_USER_SUCCESS', payload: user });
+      } catch (error) {
+        dispatch({ type: 'FETCH_USER_ERROR', payload: error.message });
+      }
+    };
+  };
+  
+  // Використання
+  dispatch(fetchUser(123));
+  ```
+
+- **Що таке middleware в Redux?**
+  
+  Middleware - це функції, які розширюють можливості Redux між відправкою action і досягненням reducer.
+  
+  **Популярні middleware:**
+  
+  ```jsx
+  import { configureStore } from '@reduxjs/toolkit';
+  import logger from 'redux-logger';
+  
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        thunk: true, // для асинхронних дій
+        serializableCheck: true, // перевіряє серіалізацію
+      }).concat(logger), // додаємо логер
+  });
+  ```
+  
+  **Створення власного middleware:**
+  
+  ```jsx
+  // Logger middleware
+  const loggerMiddleware = (store) => (next) => (action) => {
+    console.log('Dispatching:', action);
+    console.log('Current state:', store.getState());
+    
+    const result = next(action);
+    
+    console.log('Next state:', store.getState());
+    return result;
+  };
+  
+  // Error handling middleware
+  const errorMiddleware = (store) => (next) => (action) => {
+    try {
+      return next(action);
+    } catch (error) {
+      console.error('Redux error:', error);
+      // Можна відправити action для обробки помилки
+      store.dispatch({ type: 'ERROR_OCCURRED', payload: error.message });
+    }
+  };
+  
+  // Використання
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware()
+        .concat(loggerMiddleware)
+        .concat(errorMiddleware)
+  });
+  ```
+  
+  **Порядок виконання middleware:**
+  
+  ```
+  dispatch(action) → middleware1 → middleware2 → reducer → store
+  ```
+  
+  Middleware дозволяють:
+  - Логувати actions і state changes
+  - Обробляти асинхронні дії
+  - Валідувати actions
+  - Трансформувати actions
+  - Обробляти помилки
 
 ## TypeScript питання
 
 ### Базові концепції
 
-- Що таке TypeScript і навіщо він потрібен?
-- В чому різниця між TypeScript та JavaScript?
-- Що таке статична типізація?
-- Як оголосити тип змінної?
+- **Що таке TypeScript і навіщо він потрібен?**
+  
+  TypeScript - це надмножина JavaScript, яка додає статичну типізацію і компілюється в звичайний JavaScript.
+  
+  Навіщо потрібен TypeScript:
+  - **Статична типізація** - помилки виявляються на етапі розробки
+  - **Кращий IntelliSense** - автодоповнення і підказки в IDE
+  - **Рефакторинг** - безпечна зміна коду
+  - **Документація** - типи служать документацією
+  - **Велика команда** - легше розуміти код інших розробників
+  - **Менше runtime помилок** - багато помилок ловляться під час компіляції
+  
+  ```typescript
+  // JavaScript - помилка виявиться тільки під час виконання
+  function greet(name) {
+    return `Hello, ${name.toUpperCase()}`;
+  }
+  greet(null); // Runtime error!
+  
+  // TypeScript - помилка виявиться під час компіляції
+  function greet(name: string): string {
+    return `Hello, ${name.toUpperCase()}`;
+  }
+  greet(null); // Compile-time error!
+  ```
+
+- **В чому різниця між TypeScript та JavaScript?**
+  
+  | JavaScript | TypeScript |
+  |------------|------------|
+  | Динамічна типізація | Статична типізація |
+  | Помилки під час виконання | Помилки під час компіляції |
+  | Слабкі інструменти розробки | Сильні інструменти (IntelliSense) |
+  | Менше коду | Більше коду (типи) |
+  | Швидший розвиток | Повільніший розвиток, але якісніший |
+  | Працює безпосередньо в браузері | Потребує компіляції |
+  
+  ```typescript
+  // JavaScript
+  let user = { name: "John", age: 30 };
+  user.email = "john@example.com"; // OK, додали нову властивість
+  
+  // TypeScript
+  interface User {
+    name: string;
+    age: number;
+  }
+  
+  let user: User = { name: "John", age: 30 };
+  user.email = "john@example.com"; // Error! Property 'email' does not exist
+  ```
+
+- **Що таке статична типізація?**
+  
+  Статична типізація - це перевірка типів під час компіляції, а не під час виконання програми.
+  
+  ```typescript
+  // Статична типізація - типи перевіряються під час компіляції
+  let count: number = 5;
+  count = "hello"; // Error: Type 'string' is not assignable to type 'number'
+  
+  function add(a: number, b: number): number {
+    return a + b;
+  }
+  
+  add(5, 10); // OK
+  add("5", "10"); // Error: Argument of type 'string' is not assignable to parameter of type 'number'
+  ```
+  
+  **Переваги статичної типізації:**
+  - Раннє виявлення помилок
+  - Кращий рефакторинг
+  - Самодокументований код
+  - Кращий IntelliSense
+  
+  **Недоліки:**
+  - Більше коду для написання
+  - Крива навчання
+  - Час на компіляцію
+
+- **Як оголосити тип змінної?**
+  
+  ```typescript
+  // Явне оголошення типу
+  let name: string = "Максим";
+  let age: number = 25;
+  let isActive: boolean = true;
+  let items: string[] = ["apple", "banana"];
+  let numbers: Array<number> = [1, 2, 3];
+  
+  // Автоматичне визначення типу (type inference)
+  let city = "Київ"; // TypeScript автоматично визначає тип як string
+  let score = 100; // автоматично number
+  
+  // Множинні типи (Union Types)
+  let id: string | number = "user123";
+  id = 456; // OK
+  
+  // Літерні типи
+  let status: "pending" | "completed" | "failed" = "pending";
+  
+  // Об'єкти
+  let user: { name: string; age: number } = {
+    name: "Іван",
+    age: 30
+  };
+  
+  // Функції
+  let greet: (name: string) => string = (name) => `Hello, ${name}`;
+  
+  // Опціональні властивості
+  let config: { 
+    host: string; 
+    port?: number; // опціональна властивість
+  } = {
+    host: "localhost"
+  };
+  
+  // Тип any (не рекомендується)
+  let anything: any = "hello";
+  anything = 42; // OK, але втрачаємо переваги типізації
+  
+  // Тип unknown (безпечніший варіант any)
+  let value: unknown = "test";
+  if (typeof value === "string") {
+    console.log(value.toUpperCase()); // OK після перевірки
+  }
+  ```
 
 ### Типи
 
-- Які базові типи є в TypeScript?
-- Що таке інтерфейси?
-- В чому різниця між `interface` та `type`?
-- Що таке generics?
-- Що таке union types?
+- **Які базові типи є в TypeScript?**
+  
+  ```typescript
+  // Примітивні типи
+  let name: string = "Максим";
+  let age: number = 25;
+  let isActive: boolean = true;
+  let nothing: null = null;
+  let notDefined: undefined = undefined;
+  
+  // Масиви
+  let colors: string[] = ["red", "green", "blue"];
+  let numbers: Array<number> = [1, 2, 3];
+  let matrix: number[][] = [[1, 2], [3, 4]];
+  
+  // Кортежі (Tuples)
+  let point: [number, number] = [10, 20];
+  let user: [string, number, boolean] = ["John", 30, true];
+  
+  // Об'єкти
+  let person: { name: string; age: number } = {
+    name: "Anna",
+    age: 25
+  };
+  
+  // Функції
+  let add: (a: number, b: number) => number = (a, b) => a + b;
+  
+  // Enum
+  enum Color {
+    Red = "red",
+    Green = "green",
+    Blue = "blue"
+  }
+  let favoriteColor: Color = Color.Red;
+  
+  // Union Types
+  let id: string | number = "user123";
+  
+  // Literal Types
+  let status: "loading" | "success" | "error" = "loading";
+  
+  // Any (уникати)
+  let anything: any = "hello";
+  
+  // Unknown (безпечніший any)
+  let value: unknown = getData();
+  
+  // Never (для функцій, що ніколи не повертають значення)
+  function throwError(): never {
+    throw new Error("Something went wrong");
+  }
+  
+  // Void (для функцій без return)
+  function logMessage(msg: string): void {
+    console.log(msg);
+  }
+  ```
+
+- **Що таке інтерфейси?**
+  
+  Інтерфейси визначають структуру об'єктів і можуть бути використані для типізації.
+  
+  ```typescript
+  // Базовий інтерфейс
+  interface User {
+    id: number;
+    name: string;
+    email: string;
+    age?: number; // опціональна властивість
+    readonly createdAt: Date; // тільки для читання
+  }
+  
+  // Використання
+  const user: User = {
+    id: 1,
+    name: "Максим",
+    email: "max@example.com",
+    createdAt: new Date()
+  };
+  
+  // user.createdAt = new Date(); // Error! Cannot assign to 'createdAt'
+  
+  // Інтерфейс з методами
+  interface Calculator {
+    add(a: number, b: number): number;
+    subtract(a: number, b: number): number;
+  }
+  
+  class SimpleCalculator implements Calculator {
+    add(a: number, b: number): number {
+      return a + b;
+    }
+    
+    subtract(a: number, b: number): number {
+      return a - b;
+    }
+  }
+  
+  // Розширення інтерфейсів
+  interface Animal {
+    name: string;
+    age: number;
+  }
+  
+  interface Dog extends Animal {
+    breed: string;
+    bark(): void;
+  }
+  
+  const myDog: Dog = {
+    name: "Buddy",
+    age: 3,
+    breed: "Golden Retriever",
+    bark() {
+      console.log("Woof!");
+    }
+  };
+  
+  // Індексні сигнатури
+  interface StringDictionary {
+    [key: string]: string;
+  }
+  
+  const dict: StringDictionary = {
+    greeting: "Привіт",
+    farewell: "До побачення"
+  };
+  ```
+
+- **В чому різниця між `interface` та `type`?**
+  
+  ```typescript
+  // Interface - для об'єктів, можна розширювати
+  interface UserInterface {
+    name: string;
+    age: number;
+  }
+  
+  // Розширення interface
+  interface UserInterface {
+    email: string; // додається до існуючого інтерфейсу
+  }
+  
+  interface AdminInterface extends UserInterface {
+    permissions: string[];
+  }
+  
+  // Type alias - для будь-яких типів, не можна розширювати
+  type UserType = {
+    name: string;
+    age: number;
+  };
+  
+  // type UserType = { email: string }; // Error! Duplicate identifier
+  
+  type AdminType = UserType & {
+    permissions: string[];
+  };
+  
+  // Type може бути для примітивів і union типів
+  type ID = string | number;
+  type Status = "loading" | "success" | "error";
+  type EventHandler = (event: Event) => void;
+  
+  // Generics в type
+  type ApiResponse<T> = {
+    data: T;
+    status: number;
+    message: string;
+  };
+  
+  type UserResponse = ApiResponse<User>;
+  ```
+  
+  **Коли використовувати:**
+  - **Interface**: для об'єктів, коли потрібне розширення, публічні API
+  - **Type**: для союзних типів, примітивів, складних типів, коли не потрібне розширення
+
+- **Що таке generics?**
+  
+  Generics дозволяють створювати компоненти, які працюють з різними типами, зберігаючи type safety.
+  
+  ```typescript
+  // Проста generic функція
+  function identity<T>(arg: T): T {
+    return arg;
+  }
+  
+  let stringResult = identity<string>("hello"); // тип string
+  let numberResult = identity<number>(42); // тип number
+  let autoResult = identity("hello"); // TypeScript автоматично визначить тип
+  
+  // Generic інтерфейс
+  interface Container<T> {
+    value: T;
+    getValue(): T;
+  }
+  
+  class NumberContainer implements Container<number> {
+    constructor(public value: number) {}
+    
+    getValue(): number {
+      return this.value;
+    }
+  }
+  
+  // Multiple type parameters
+  interface Pair<T, U> {
+    first: T;
+    second: U;
+  }
+  
+  let pair: Pair<string, number> = {
+    first: "hello",
+    second: 42
+  };
+  
+  // Generic constraints
+  interface Lengthwise {
+    length: number;
+  }
+  
+  function logLength<T extends Lengthwise>(arg: T): T {
+    console.log(arg.length); // OK, тому що T має length
+    return arg;
+  }
+  
+  logLength("hello"); // OK
+  logLength([1, 2, 3]); // OK
+  // logLength(42); // Error! number doesn't have length
+  
+  // Conditional types
+  type IsArray<T> = T extends any[] ? true : false;
+  
+  type Test1 = IsArray<string[]>; // true
+  type Test2 = IsArray<string>; // false
+  
+  // Utility types з generics
+  interface Todo {
+    id: number;
+    title: string;
+    completed: boolean;
+  }
+  
+  type PartialTodo = Partial<Todo>; // всі властивості опціональні
+  type TodoTitle = Pick<Todo, 'title'>; // тільки title
+  type TodoWithoutId = Omit<Todo, 'id'>; // без id
+  ```
+
+- **Що таке union types?**
+  
+  Union types дозволяють змінній бути одним з декількох типів.
+  
+  ```typescript
+  // Базові union types
+  let id: string | number;
+  id = "user123"; // OK
+  id = 456; // OK
+  // id = true; // Error!
+  
+  // Функція з union типом
+  function formatId(id: string | number): string {
+    if (typeof id === "string") {
+      return id.toUpperCase();
+    } else {
+      return id.toString();
+    }
+  }
+  
+  // Literal union types
+  type Theme = "light" | "dark" | "auto";
+  type Size = "small" | "medium" | "large";
+  
+  function setTheme(theme: Theme) {
+    document.body.className = `theme-${theme}`;
+  }
+  
+  setTheme("dark"); // OK
+  // setTheme("blue"); // Error!
+  
+  // Union з об'єктами
+  type LoadingState = {
+    status: "loading";
+  };
+  
+  type SuccessState = {
+    status: "success";
+    data: any;
+  };
+  
+  type ErrorState = {
+    status: "error";
+    error: string;
+  };
+  
+  type AppState = LoadingState | SuccessState | ErrorState;
+  
+  function handleState(state: AppState) {
+    switch (state.status) {
+      case "loading":
+        console.log("Loading...");
+        break;
+      case "success":
+        console.log("Data:", state.data); // TypeScript знає про властивість data
+        break;
+      case "error":
+        console.log("Error:", state.error); // TypeScript знає про властивість error
+        break;
+    }
+  }
+  
+  // Discriminated unions
+  interface Circle {
+    kind: "circle";
+    radius: number;
+  }
+  
+  interface Rectangle {
+    kind: "rectangle";
+    width: number;
+    height: number;
+  }
+  
+  type Shape = Circle | Rectangle;
+  
+  function getArea(shape: Shape): number {
+    switch (shape.kind) {
+      case "circle":
+        return Math.PI * shape.radius ** 2;
+      case "rectangle":
+        return shape.width * shape.height;
+    }
+  }
+  
+  // Intersection types (&)
+  type Person = {
+    name: string;
+    age: number;
+  };
+  
+  type Employee = {
+    id: number;
+    department: string;
+  };
+  
+  type WorkingPerson = Person & Employee;
+  
+  const worker: WorkingPerson = {
+    name: "John",
+    age: 30,
+    id: 123,
+    department: "IT"
+  };
+  ```
 
 ### React + TypeScript
 
-- Як типізувати props компонента?
-- Як типізувати useState?
-- Як типізувати події?
-- Що таке React.FC?
+- **Як типізувати props компонента?**
+  
+  ```tsx
+  // Через інтерфейс (рекомендований спосіб)
+  interface UserCardProps {
+    name: string;
+    age: number;
+    email?: string; // опціональна властивість
+    isActive: boolean;
+    hobbies: string[];
+    onClick: (id: number) => void;
+    children: React.ReactNode; // для дочірніх елементів
+  }
+  
+  function UserCard({ name, age, email, isActive, hobbies, onClick, children }: UserCardProps) {
+    return (
+      <div>
+        <h2>{name}</h2>
+        <p>Вік: {age}</p>
+        {email && <p>Email: {email}</p>}
+        <p>Статус: {isActive ? 'Активний' : 'Неактивний'}</p>
+        <ul>
+          {hobbies.map(hobby => <li key={hobby}>{hobby}</li>)}
+        </ul>
+        <button onClick={() => onClick(1)}>Click</button>
+        {children}
+      </div>
+    );
+  }
+  
+  // Через type alias
+  type ButtonProps = {
+    variant: 'primary' | 'secondary' | 'danger';
+    size: 'small' | 'medium' | 'large';
+    disabled?: boolean;
+    children: React.ReactNode;
+  } & React.ButtonHTMLAttributes<HTMLButtonElement>; // успадковуємо HTML атрибути
+  
+  function Button({ variant, size, disabled = false, children, ...props }: ButtonProps) {
+    return (
+      <button 
+        className={`btn btn-${variant} btn-${size}`}
+        disabled={disabled}
+        {...props}
+      >
+        {children}
+      </button>
+    );
+  }
+  
+  // Використання
+  <UserCard
+    name="Максим"
+    age={25}
+    email="max@example.com"
+    isActive={true}
+    hobbies={['програмування', 'читання']}
+    onClick={(id) => console.log(id)}
+  >
+    <p>Додаткова інформація</p>
+  </UserCard>
+  
+  <Button variant="primary" size="medium" onClick={handleClick}>
+    Натисни мене
+  </Button>
+  ```
+
+- **Як типізувати useState?**
+  
+  ```tsx
+  import { useState } from 'react';
+  
+  // Автоматичне визначення типу
+  const [count, setCount] = useState(0); // number
+  const [name, setName] = useState(''); // string
+  const [isVisible, setIsVisible] = useState(true); // boolean
+  
+  // Явне вказування типу
+  const [user, setUser] = useState<User | null>(null);
+  
+  interface User {
+    id: number;
+    name: string;
+    email: string;
+  }
+  
+  const [users, setUsers] = useState<User[]>([]);
+  
+  // Union types
+  type Status = 'idle' | 'loading' | 'success' | 'error';
+  const [status, setStatus] = useState<Status>('idle');
+  
+  // Складні об'єкти
+  interface FormData {
+    username: string;
+    email: string;
+    age: number;
+  }
+  
+  const [formData, setFormData] = useState<FormData>({
+    username: '',
+    email: '',
+    age: 0
+  });
+  
+  // Функціональні оновлення
+  const updateUser = (newUser: User) => {
+    setUser(prevUser => prevUser ? { ...prevUser, ...newUser } : newUser);
+  };
+  
+  const addUser = (user: User) => {
+    setUsers(prevUsers => [...prevUsers, user]);
+  };
+  
+  // Generic useState для переваги використовуваного типу
+  function useLocalStorage<T>(key: string, initialValue: T) {
+    const [value, setValue] = useState<T>(() => {
+      try {
+        const item = window.localStorage.getItem(key);
+        return item ? JSON.parse(item) : initialValue;
+      } catch (error) {
+        return initialValue;
+      }
+    });
+  
+    const setStoredValue = (value: T | ((val: T) => T)) => {
+      try {
+        const valueToStore = value instanceof Function ? value(value) : value;
+        setValue(valueToStore);
+        window.localStorage.setItem(key, JSON.stringify(valueToStore));
+      } catch (error) {
+        console.error(error);
+      }
+    };
+  
+    return [value, setStoredValue] as const; // as const для точних типів
+  }
+  ```
+
+- **Як типізувати події?**
+  
+  ```tsx
+  import { ChangeEvent, FormEvent, MouseEvent, KeyboardEvent } from 'react';
+  
+  function FormComponent() {
+    // Input change події
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+      console.log(e.target.value);
+    };
+  
+    // Textarea change події
+    const handleTextareaChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+      console.log(e.target.value);
+    };
+  
+    // Select change події
+    const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
+      console.log(e.target.value);
+    };
+  
+    // Form submit події
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      console.log('Form submitted');
+    };
+  
+    // Button click події
+    const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+      console.log('Button clicked');
+      console.log(e.currentTarget.name);
+    };
+  
+    // Keyboard події
+    const handleKeyPress = (e: KeyboardEvent<HTMLInputElement>) => {
+      if (e.key === 'Enter') {
+        console.log('Enter pressed');
+      }
+    };
+  
+    // Generic handler
+    const handleGenericClick = (e: MouseEvent<HTMLElement>) => {
+      console.log(e.currentTarget.tagName);
+    };
+  
+    return (
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
+        />
+        
+        <textarea onChange={handleTextareaChange} />
+        
+        <select onChange={handleSelectChange}>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+        </select>
+        
+        <button 
+          type="submit" 
+          onClick={handleClick}
+          name="submit-button"
+        >
+          Submit
+        </button>
+        
+        <div onClick={handleGenericClick}>Click me</div>
+      </form>
+    );
+  }
+  
+  // Custom event handlers
+  interface CustomButtonProps {
+    onCustomClick: (data: { id: number; name: string }) => void;
+  }
+  
+  function CustomButton({ onCustomClick }: CustomButtonProps) {
+    const handleClick = () => {
+      onCustomClick({ id: 1, name: 'test' });
+    };
+  
+    return <button onClick={handleClick}>Custom Click</button>;
+  }
+  
+  // Hook для подій
+  function useClickOutside<T extends HTMLElement>(
+    callback: () => void
+  ) {
+    const ref = useRef<T>(null);
+  
+    useEffect(() => {
+      const handleClick = (event: MouseEvent) => {
+        if (ref.current && !ref.current.contains(event.target as Node)) {
+          callback();
+        }
+      };
+  
+      document.addEventListener('mousedown', handleClick);
+      return () => document.removeEventListener('mousedown', handleClick);
+    }, [callback]);
+  
+    return ref;
+  }
+  ```
+
+- **Що таке React.FC?**
+  
+  `React.FC` (React.FunctionComponent) - це TypeScript тип для функціональних компонентів React.
+  
+  ```tsx
+  // З React.FC
+  interface Props {
+    name: string;
+    age: number;
+  }
+  
+  const UserComponent: React.FC<Props> = ({ name, age }) => {
+    return <div>{name} is {age} years old</div>;
+  };
+  
+  // Без React.FC (сучасний підхід)
+  function UserComponent({ name, age }: Props) {
+    return <div>{name} is {age} years old</div>;
+  }
+  
+  // React.FC автоматично включає children
+  const Container: React.FC = ({ children }) => {
+    return <div className="container">{children}</div>;
+  };
+  
+  // Без React.FC потрібно явно вказати children
+  interface ContainerProps {
+    children: React.ReactNode;
+  }
+  
+  function Container({ children }: ContainerProps) {
+    return <div className="container">{children}</div>;
+  }
+  ```
+  
+  **Переваги React.FC:**
+  - Автоматично включає `children` prop
+  - Автоматично включає `displayName`, `defaultProps`, та інші static властивості
+  - Явно показує, що це React компонент
+  
+  **Недоліки React.FC:**
+  - Автоматично включає `children`, навіть якщо не потрібно
+  - Проблеми з generics
+  - Складніше з defaultProps
+  
+  **Сучасний підхід (без React.FC):**
+  
+  ```tsx
+  // Рекомендований сучасний підхід
+  interface ButtonProps {
+    variant: 'primary' | 'secondary';
+    children: React.ReactNode;
+    onClick?: () => void;
+  }
+  
+  function Button({ variant, children, onClick }: ButtonProps) {
+    return (
+      <button className={`btn-${variant}`} onClick={onClick}>
+        {children}
+      </button>
+    );
+  }
+  
+  // З defaultProps
+  Button.defaultProps = {
+    variant: 'primary'
+  };
+  
+  // Generic компонент (складно з React.FC)
+  interface ListProps<T> {
+    items: T[];
+    renderItem: (item: T) => React.ReactNode;
+  }
+  
+  function List<T>({ items, renderItem }: ListProps<T>) {
+    return (
+      <ul>
+        {items.map((item, index) => (
+          <li key={index}>{renderItem(item)}</li>
+        ))}
+      </ul>
+    );
+  }
+  
+  // Використання
+  <List
+    items={[1, 2, 3]}
+    renderItem={(item) => <span>Number: {item}</span>}
+  />
+  ```
+  
+  **Висновок:** Сучасна практика рекомендує не використовувати `React.FC` і писати звичайні функції з явною типізацією props.
 
 ## Інструменти розробки
 
